@@ -8,6 +8,8 @@ from flask import Flask, jsonify, render_template, send_from_directory
 import data
 
 app = Flask(__name__)
+import hubguard  # noqa: E402  (the owner's universal switches, kept in Cramly)
+hubguard.install(app, "showcase")
 
 
 @app.get("/")

@@ -238,5 +238,6 @@ const begin = withSound => { const A = window.RevealAudio; try { A.init(); A.set
 $("#goSound").onclick = () => begin(true); $("#goSilent").onclick = () => begin(false);
 $("#snd").onclick = () => { const A = window.RevealAudio; if (!A.ready()) { try { A.init(); A.resume(); } catch (e) { return; } } A.setMuted(!A.isMuted()); $("#snd").innerHTML = A.isMuted() ? "&#128263;" : "&#128266;"; };
 </script>
+<script src="/static/hub.js" data-app="showcase" defer></script>
 </body>
 </html>
