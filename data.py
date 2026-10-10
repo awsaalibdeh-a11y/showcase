@@ -9,7 +9,7 @@ PROJECTS = [
     {
         "id": "homebase", "name": "Homebase", "emoji": "🏠", "hue": 215, "kind": "app",
         "tag": "Family location, messages and calls. Honest about every bit.",
-        "about": "A real Android app for families: see where everyone is on a map, send messages, and make calls that actually ring. "
+        "about": "A real Android app, with a laptop version in the browser, for families: see where everyone is on a map, send messages, and make calls that actually ring. "
                  "It is built to never feel controlling: everything shared is visible on the child's screen, they can pause any time, "
                  "and they decide what parents are allowed to do from a permissions panel.",
         "stack": ["Kotlin", "Jetpack Compose", "WebRTC", "Flask"],
@@ -100,7 +100,7 @@ PROJECTS = [
 ]
 
 HOMEBASE_STEPS = [
-    ("Download", "Get the APK from the Homebase page and open it on the Android phone or tablet."),
+    ("Download", "Get the APK from the Homebase page and open it on the Android phone or tablet. On a laptop, just open the website."),
     ("Allow", "Android asks once to allow installs from your browser. Say yes."),
     ("Create or join", "A parent creates the family. Everyone else joins with an 8-character code."),
     ("Read and agree", "The child sees exactly what is shared and what never will be, then chooses."),
