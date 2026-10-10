@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everything I've built</title>
+<meta name="description" content="Ten projects with live links, how each one works, how I made it, and the reveal.">
+<style>
+:root { --bg: #0a0a0b; --card: #111113; --card2: #161619; --line: #242428; --ink: #ececf0; --muted: #8d8d96; --rim: rgba(255,255,255,.09); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.55; }
+a { color: inherit; text-decoration: none; }
+.wrap { width: min(1160px, 100% - 40px); margin: 0 auto; }
+.silver { background: linear-gradient(180deg, #fff 10%, #9b9ba4 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(16px); background: rgba(10,10,11,.82); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+nav b { font-weight: 600; letter-spacing: -.02em; } nav div a { margin-left: 22px; color: var(--muted); font-size: 14px; transition: color .2s; } nav div a:hover { color: #fff; }
+.hero { position: relative; padding: 13vh 0 9vh; text-align: center; overflow: hidden; }
+.hero::before { content: ""; position: absolute; left: 50%; top: -20%; width: 100vmax; height: 70vmax; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.07), transparent 62%); pointer-events: none; }
+.kick { letter-spacing: .5em; font-size: 12px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+h1 { font-size: clamp(46px, 10.5vw, 148px); font-weight: 300; letter-spacing: -.05em; line-height: .96; }
+.lead { margin: 24px auto 0; max-width: 52ch; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
+.cta { margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14.5px; border: 1px solid var(--rim); background: var(--card2); transition: transform .2s, background .2s; cursor: pointer; color: var(--ink); }
+.btn:hover { transform: translateY(-2px); background: #1d1d21; } .btn.solid { background: #ececf0; color: #0a0a0b; border-color: #ececf0; } .btn.solid:hover { background: #fff; }
+.stats { margin-top: 54px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.stat { padding: 16px 28px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); min-width: 150px; }
+.stat b { display: block; font-size: 32px; font-weight: 300; letter-spacing: -.03em; } .stat span { color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+section { padding: 8vh 0; }
+h2 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -.045em; line-height: 1.05; font-weight: 300; }
+.sub { color: var(--muted); margin-top: 10px; max-width: 60ch; }
+.reveal-frame { margin-top: 28px; aspect-ratio: 16 / 9; width: 100%; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 40px 100px rgba(0,0,0,.7); }
+.reveal-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.reveal-actions { margin-top: 14px; }
+.chips { margin: 26px 0 22px; display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { padding: 8px 18px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; transition: all .2s; }
+.chip:hover { color: #fff; } .chip.on { background: #ececf0; color: #0a0a0b; border-color: #ececf0; font-weight: 600; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; }
+.card { position: relative; border: 1px solid var(--line); border-radius: 24px; padding: 24px; background: var(--card); display: flex; flex-direction: column; gap: 14px; transition: transform .25s, border-color .25s, background .25s; }
+.card:hover { transform: translateY(-3px); border-color: #3a3a40; background: var(--card2); }
+.top { display: flex; gap: 16px; align-items: center; }
+.tile { flex: none; width: 58px; height: 58px; border-radius: 27%; display: grid; place-items: center; font-size: 29px; background: linear-gradient(160deg, #222226, #0d0d0f 72%); box-shadow: inset 0 1px 0 rgba(255,255,255,.17), inset 0 0 0 1px rgba(255,255,255,.04), 0 14px 30px rgba(0,0,0,.6); }
+.card h3 { font-size: 22px; font-weight: 500; letter-spacing: -.03em; line-height: 1.1; } .card .tag { color: var(--muted); font-size: 13.5px; margin-top: 3px; }
+.card p.about { color: #c3c3cb; font-size: 14.5px; }
+.stack { display: flex; gap: 6px; flex-wrap: wrap; } .stack span { font-size: 12px; padding: 4px 10px; border-radius: 99px; background: #1b1b1e; border: 1px solid var(--line); color: var(--muted); }
+.stack span.ai { color: #0a0a0b; background: #ececf0; border-color: #ececf0; font-weight: 600; }
+details { border-top: 1px solid var(--line); padding-top: 12px; } summary { cursor: pointer; font-weight: 600; font-size: 14px; list-style: none; display: flex; justify-content: space-between; }
+summary::after { content: "+"; color: var(--muted); font-size: 18px; line-height: 1; } details[open] summary::after { content: "\2013"; } summary::-webkit-details-marker { display: none; }
+ol { margin: 12px 0 2px; list-style: none; counter-reset: s; display: grid; gap: 10px; }
+ol li { counter-increment: s; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: #d4d4da; }
+ol li::before { content: counter(s); flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; border: 1px solid #3a3a40; color: #fff; margin-top: 1px; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; } .links .btn { padding: 9px 18px; font-size: 14px; }
+.badge { position: absolute; top: 18px; right: 18px; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); }
+.feature { border: 1px solid var(--line); border-radius: 30px; padding: clamp(24px, 5vw, 54px); background: radial-gradient(800px 320px at 85% 0%, rgba(255,255,255,.05), transparent 60%), var(--card); }
+.promise { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 26px; }
+.promise div { padding: 18px 20px; border-radius: 18px; background: #0d0d0f; border: 1px solid var(--line); font-size: 14.5px; color: #c3c3cb; } .promise b { display: block; margin-bottom: 6px; font-size: 16px; color: #fff; font-weight: 600; }
+.credits { text-align: center; }
+.mebig { font-size: clamp(70px, 18vw, 230px); font-weight: 200; letter-spacing: -.065em; line-height: .95; margin-top: 10px; }
+.credits .say { margin: 18px auto 0; max-width: 46ch; color: var(--muted); font-size: clamp(16px, 2vw, 21px); }
+.crow { margin-top: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; text-align: left; }
+.crow div { padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); } .crow b { display: block; font-size: 20px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 6px; }
+.crow span { color: var(--muted); font-size: 14px; display: block; } .crow .helper { background: var(--card2); border-color: #34343a; } .crow .helper b { font-size: 24px; }
+footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--line); }
+.hide { display: none !important; }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } nav div a:nth-child(n+3) { display: none; } }
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#credits">Credits</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kick">The collection</div>
+  <h1 class="silver">Everything<br>I've built.</h1>
+  <p class="lead">{{ projects|length }} projects, each one real and online. Open any of them, see how it works, and see how I made it.</p>
+  <div class="cta"><a class="btn solid" href="#reveal">&#9654; Watch the reveal</a><a class="btn" href="#projects">Browse the projects</a></div>
+  <div class="stats">
+    <div class="stat"><b>{{ projects|length }}</b><span>projects</span></div>
+    <div class="stat"><b>{{ projects|selectattr("url")|list|length }}</b><span>live links</span></div>
+    <div class="stat"><b>1</b><span>Android app</span></div>
+  </div>
+</div></header>
+
+<section id="reveal"><div class="wrap">
+  <h2>The <span class="silver">reveal</span></h2>
+  <p class="sub">A short film of how I made each project. Arrow keys skip around, space pauses.</p>
+  <div class="reveal-frame"><iframe src="/reveal" title="The reveal animation" loading="lazy" allowfullscreen></iframe></div>
+  <div class="reveal-actions"><a class="btn" href="/reveal" target="_blank" rel="noopener">&#x26F6; Open it on its own</a></div>
+</div></section>
+
+<section id="projects"><div class="wrap">
+  <h2>All the <span class="silver">projects</span></h2>
+  <p class="sub">Every card has the three-step "how to use it" and the three-step "how I made it".</p>
+  <div class="chips" id="chips">
+    <button class="chip on" data-k="all">All</button><button class="chip" data-k="app">App</button><button class="chip" data-k="ai">AI</button><button class="chip" data-k="game">Games</button><button class="chip" data-k="tool">Tools</button>
+  </div>
+  <div class="grid" id="grid">
+  {% for p in projects %}
+    <article class="card" data-k="{{ p.kind }}">
+      {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android</span>{% endif %}
+      <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div></div></div>
+      <p class="about">{{ p.about }}</p>
+      <div class="stack">{% for s in p.stack %}<span>{{ s }}</span>{% endfor %}{% if p.ai %}<span class="ai">AI: {{ p.ai }}</span>{% endif %}</div>
+      <details><summary>How to use it</summary><ol>{% for s in p.steps %}<li>{{ s }}</li>{% endfor %}</ol></details>
+      <details><summary>How I made it</summary><ol>{% for s in p.made %}<li>{{ s }}</li>{% endfor %}</ol></details>
+      <div class="links">
+        {% if p.id == "homebase" and not p.url %}<a class="btn solid" href="#homebase">See the setup</a>
+        {% elif p.url %}<a class="btn solid" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Download" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
+        <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
+      </div>
+    </article>
+  {% endfor %}
+  </div>
+</div></section>
+
+<section id="homebase"><div class="wrap"><div class="feature">
+  <div class="kick" style="margin-bottom:12px">Featured · Android</div>
+  <h2>Homebase: <span class="silver">stay close,<br>stay yourself.</span></h2>
+  <p class="sub">A family app that shows where everyone is, lets you message, and makes calls that really ring. Nobody should feel watched: the person being located always sees exactly what is shared, can pause it, and chooses what parents can do.</p>
+  <div class="promise">
+    <div><b>What the family sees</b>Where you are while sharing is on, your battery level, and the messages you send.</div>
+    <div><b>What it never does</b>Hide itself, read your other apps or messages, turn on your mic or camera by itself, or lock your device.</div>
+    <div><b>You are in control</b>Pause any time, set quiet hours, say "not now" to a location request, and switch off any parent permission from your own panel.</div>
+  </div>
+  <p class="sub" style="margin-top:24px">Setup: download the app, allow installs once, a parent creates the family, then everyone else joins with an 8-character code.</p>
+  <div class="cta" style="justify-content:flex-start">
+    {% if homebase_url %}<a class="btn solid" href="{{ homebase_url }}" target="_blank" rel="noopener">Get Homebase &#8599;</a>{% else %}<span class="btn">Download link coming soon</span>{% endif %}
+    <a class="btn" href="{{ github }}homebase" target="_blank" rel="noopener">Read the code</a>
+  </div>
+</div></div></section>
+
+<section id="credits"><div class="wrap credits">
+  <div class="kick">Credits</div>
+  <div class="mebig silver">{{ credits[0][0] }}</div>
+  <p class="say">{{ credits[0][1] }}</p>
+  <div class="crow">
+    {% for name, text, kind in credits[1:] %}<div class="{{ kind }}"><b>{{ name }}</b><span>{{ text }}</span></div>{% endfor %}
+  </div>
+</div></section>
+
+<footer><div class="wrap">Built one idea at a time. Free-tier sites can take a few seconds to wake up on the first visit.</div></footer>
+
+<script>
+const chips = document.getElementById("chips");
+chips.addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  chips.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
+  document.querySelectorAll("#grid .card").forEach(c => c.classList.toggle("hide", b.dataset.k !== "all" && c.dataset.k !== b.dataset.k));
+});
+</script>
+</body>
+</html>
