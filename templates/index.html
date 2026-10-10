@@ -8,6 +8,8 @@
 <meta property="og:title" content="Everything I've built">
 <meta property="og:description" content="Ten projects with live links, how each works, and how I made it.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="/static/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <title>Everything I've built</title>
 <meta name="description" content="Ten projects with live links, how each one works, how I made it, and the reveal.">
 <style>
@@ -68,11 +70,20 @@ ol li::before { content: counter(s); flex: none; width: 24px; height: 24px; bord
 .crow span { color: var(--muted); font-size: 14px; display: block; } .crow .helper { background: var(--card2); border-color: #34343a; } .crow .helper b { font-size: 24px; }
 footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--line); }
 .hide { display: none !important; }
+:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 3px; border-radius: 8px; }
+.skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #000; padding: 8px 14px; border-radius: 10px; z-index: 50; } .skip:focus { left: 8px; }
+.tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 26px 0 22px; } .tools .chips { margin: 0; flex: 1 1 auto; }
+.search { flex: 0 1 260px; padding: 10px 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-size: 14px; outline-offset: 2px; } .search::placeholder { color: var(--muted); }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #55555c; margin-right: 6px; vertical-align: 1px; } .dot.online { background: #6fe3a5; box-shadow: 0 0 8px #6fe3a5; } .dot.waking { background: #ffd37a; animation: pulse 1.4s infinite; } .dot.down { background: #ff7a93; }
+@keyframes pulse { 50% { opacity: .35; } }
+.live { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.none { display: none; text-align: center; color: var(--muted); padding: 40px 0; } .none.on { display: block; }
 @media (max-width: 640px) { .reveal-frame { aspect-ratio: 3 / 4; } }
 @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } nav div a:nth-child(n+3) { display: none; } }
 </style>
 </head>
 <body>
+<a class="skip" href="#projects">Skip to the projects</a>
 <nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="wrap">
@@ -97,14 +108,19 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 <section id="projects"><div class="wrap">
   <h2>All the <span class="silver">projects</span></h2>
   <p class="sub">Every card has the three-step "how to use it" and the three-step "how I made it".</p>
+  <div class="tools">
+  <input class="search" id="q" type="search" placeholder="Search projects  ( / )" aria-label="Search projects" autocomplete="off">
+  <button class="btn" id="wake" title="Free-tier sites sleep when nobody visits. This wakes them all up in the background.">&#9889; Wake all sites</button>
+  </div>
   <div class="chips" id="chips">
     <button class="chip on" data-k="all">All</button><button class="chip" data-k="app">App</button><button class="chip" data-k="ai">AI</button><button class="chip" data-k="game">Games</button><button class="chip" data-k="tool">Tools</button>
   </div>
+  <div class="none" id="none">No project matches that. Try a different word.</div>
   <div class="grid" id="grid">
   {% for p in projects %}
-    <article class="card" data-k="{{ p.kind }}">
+    <article class="card" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
       {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android</span>{% endif %}
-      <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div></div></div>
+      <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
       <p class="about">{{ p.about }}</p>
       <div class="stack">{% for s in p.stack %}<span>{{ s }}</span>{% endfor %}{% if p.ai %}<span class="ai">AI: {{ p.ai }}</span>{% endif %}</div>
       <details><summary>How to use it</summary><ol>{% for s in p.steps %}<li>{{ s }}</li>{% endfor %}</ol></details>
@@ -147,11 +163,32 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 <footer><div class="wrap">Built one idea at a time. Free-tier sites can take a few seconds to wake up on the first visit.</div></footer>
 
 <script>
-const chips = document.getElementById("chips");
-chips.addEventListener("click", e => {
-  const b = e.target.closest(".chip"); if (!b) return;
-  chips.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b));
-  document.querySelectorAll("#grid .card").forEach(c => c.classList.toggle("hide", b.dataset.k !== "all" && c.dataset.k !== b.dataset.k));
+const chips = document.getElementById("chips"), q = document.getElementById("q");
+let kind = "all";
+function apply() {
+  const w = q.value.trim().toLowerCase(); let shown = 0;
+  document.querySelectorAll("#grid .card").forEach(c => { const ok = (kind === "all" || c.dataset.k === kind) && (!w || c.dataset.t.includes(w)); c.classList.toggle("hide", !ok); shown += ok; });
+  document.getElementById("none").classList.toggle("on", !shown);
+}
+chips.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; chips.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); kind = b.dataset.k; apply(); });
+q.addEventListener("input", apply);
+addEventListener("keydown", e => { if (e.key === "/" && document.activeElement !== q && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); q.focus(); } else if (e.key === "Escape" && document.activeElement === q) { q.value = ""; apply(); q.blur(); } });
+
+/* live status: green when a site answers, amber while it is waking up */
+const WORDS = { online: "Online", waking: "Waking up…", down: "Having trouble" };
+async function status(tries = 0) {
+  let pending = 0;
+  try {
+    const d = await (await fetch("/api/status")).json();
+    document.querySelectorAll("[data-live]").forEach(el => { const st = d.status[el.dataset.live]; if (!st) { pending++; return; } el.querySelector(".dot").className = "dot " + st.state; el.querySelector("span").textContent = WORDS[st.state] + (st.state === "online" ? " · " + (st.ms < 1000 ? st.ms + " ms" : (st.ms / 1000).toFixed(1) + " s") : ""); if (st.state !== "online") pending++; });
+  } catch (e) { pending = 1; }
+  if (pending && tries < 12) setTimeout(() => status(tries + 1), 6000);
+}
+status();
+document.getElementById("wake").addEventListener("click", e => {
+  const urls = [...document.querySelectorAll('.links a[href^="http"]')].map(a => a.href).filter(h => !h.includes("github.com"));
+  urls.forEach(u => fetch(u, { mode: "no-cors" }).catch(() => {}));
+  e.target.textContent = "✔ Waking " + urls.length + " sites…"; setTimeout(() => status(), 8000); setTimeout(() => { e.target.innerHTML = "&#9889; Wake all sites"; }, 6000);
 });
 </script>
 </body>
