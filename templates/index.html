@@ -99,7 +99,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 <body>
 <div id="bar"></div><button class="totop" id="top" aria-label="Back to top">&#8593;</button>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="wrap">
   <div class="kick">The collection</div>
@@ -181,6 +181,11 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <h2>What I <span class="silver">used</span></h2>
   <p class="sub">Counted from the projects above. The bigger the number, the more projects use it.</p>
   <div class="techs">{% for name, used in tech %}<div class="tc" title="{{ used|join(', ') }}"><b>{{ used|length }}</b><span>{{ name }}</span></div>{% endfor %}</div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions <span class="silver">people ask</span></h2>
+  <div class="faq" style="margin-top:24px">{% for qq, a in faq %}<details><summary>{{ qq }}</summary><p>{{ a }}</p></details>{% endfor %}</div>
 </div></section>
 
 <section id="credits"><div class="wrap credits">
