@@ -14,7 +14,12 @@ hubguard.install(app, "showcase")
 
 @app.get("/")
 def home():
-    return render_template("index.html", projects=data.PROJECTS, github=data.GITHUB, homebase_url=data.HOMEBASE_URL, process=data.PROCESS, credits=data.CREDITS)
+    tech = {}
+    for p in data.PROJECTS:
+        for t in p["stack"]:
+            tech.setdefault(t, []).append(p["name"])
+    tech = sorted(tech.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    return render_template("index.html", tech=tech, features=data.HOMEBASE_FEATURES, projects=data.PROJECTS, github=data.GITHUB, homebase_url=data.HOMEBASE_URL, process=data.PROCESS, credits=data.CREDITS)
 
 
 @app.get("/reveal")

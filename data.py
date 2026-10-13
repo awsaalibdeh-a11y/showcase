@@ -99,6 +99,18 @@ PROJECTS = [
     },
 ]
 
+HOMEBASE_FEATURES = [
+    ("📍", "Shared map", "Everyone who is sharing shows up, parents too. Offline? You still see the last place."),
+    ("📞", "Calls that ring", "A real ringing window on Windows and full-screen calls on phones, not a quiet notification."),
+    ("⏱️", "Honest screen time", "Counts playing and watching per app, never homework. The child sees exactly what parents see."),
+    ("🔒", "Locks, 4 hours a day max", "A parent can lock a device; the family chat announces it and the child can ask to be unlocked."),
+    ("🚫", "Ground certain apps", "Pick real apps from the child's computer, get a one-minute warning, and only that app closes."),
+    ("💻", "Windows tracker", "A small tray app with its own pop-ups that updates itself and works for two brothers on one laptop."),
+    ("✅", "Jobs and points", "Parents set jobs, children tick them off, parents approve them for points."),
+    ("🙋", "Ask, don't track", "\"Where are you?\" is a request the child can answer or say not now to."),
+    ("🏡", "Home area", "Know when someone gets home, using a place the family sets together."),
+]
+
 HOMEBASE_STEPS = [
     ("Open it", "On any phone or laptop just open the website and tap Add to Home screen. It is always the newest version. Or download the Android app."),
     ("Create or join", "A parent creates the family. Everyone else joins with an 8-character code."),

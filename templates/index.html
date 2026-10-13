@@ -69,6 +69,10 @@ ol li::before { content: counter(s); flex: none; width: 24px; height: 24px; bord
 .crow div { padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); } .crow b { display: block; font-size: 20px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 6px; }
 .crow span { color: var(--muted); font-size: 14px; display: block; } .crow .helper { background: var(--card2); border-color: #34343a; } .crow .helper b { font-size: 24px; }
 footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--line); }
+.fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 22px; }
+.fgrid div { padding: 16px 18px; border-radius: 18px; background: #0d0d0f; border: 1px solid var(--line); font-size: 14px; color: #b9b9c2; } .fgrid i { font-style: normal; font-size: 22px; display: block; margin-bottom: 6px; } .fgrid b { display: block; color: #fff; font-size: 15.5px; font-weight: 600; margin-bottom: 3px; }
+.techs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.tc { display: flex; align-items: baseline; gap: 10px; padding: 12px 20px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); transition: border-color .2s; } .tc:hover { border-color: #3a3a40; } .tc b { font-size: 22px; font-weight: 300; color: #fff; } .tc span { color: var(--muted); font-size: 14px; }
 .hide { display: none !important; }
 :focus-visible { outline: 2px solid #8ab4ff; outline-offset: 3px; border-radius: 8px; }
 .skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #000; padding: 8px 14px; border-radius: 10px; z-index: 50; } .skip:focus { left: 8px; }
@@ -84,7 +88,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 </head>
 <body>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#tech">Tech</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="wrap">
   <div class="kick">The collection</div>
@@ -145,12 +149,19 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
     <div><b>What it never does</b>Hide itself, read your other apps or messages, turn on your mic or camera by itself, or secretly change your screen time.</div>
     <div><b>You are in control</b>Pause any time, set quiet hours, say "not now" to a location request, and switch off any parent permission from your own panel.</div>
   </div>
+  <div class="fgrid">{% for e, t, d in features %}<div><i>{{ e }}</i><b>{{ t }}</b><span>{{ d }}</span></div>{% endfor %}</div>
   <p class="sub" style="margin-top:24px">Setup: open it in the browser and add it to your home screen (it always stays up to date), or install the Android app. A parent creates the family, then everyone else joins with an 8-character code. On Windows, link the tracker with a 6-digit code.</p>
   <div class="cta" style="justify-content:flex-start">
     {% if homebase_url %}<a class="btn solid" href="{{ homebase_url }}/app" target="_blank" rel="noopener">Open on your laptop &#8599;</a><a class="btn" href="{{ homebase_url }}/update" target="_blank" rel="noopener">Get the app</a>{% else %}<span class="btn">Download link coming soon</span>{% endif %}
     <a class="btn" href="{{ github }}homebase" target="_blank" rel="noopener">Read the code</a>
   </div>
 </div></div></section>
+
+<section id="tech"><div class="wrap">
+  <h2>What I <span class="silver">used</span></h2>
+  <p class="sub">Counted from the projects above. The bigger the number, the more projects use it.</p>
+  <div class="techs">{% for name, used in tech %}<div class="tc" title="{{ used|join(', ') }}"><b>{{ used|length }}</b><span>{{ name }}</span></div>{% endfor %}</div>
+</div></section>
 
 <section id="credits"><div class="wrap credits">
   <div class="kick">Credits</div>
