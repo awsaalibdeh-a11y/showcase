@@ -8,13 +8,13 @@ HOMEBASE_URL = "https://homebase-family.onrender.com"
 PROJECTS = [
     {
         "id": "homebase", "name": "Homebase", "emoji": "🏠", "hue": 215, "kind": "app",
-        "tag": "Family location, messages and calls. Honest about every bit.",
-        "about": "A real Android app, with a laptop version in the browser, for families: see where everyone is on a map, send messages, and make calls that actually ring. "
-                 "It is built to never feel controlling: everything shared is visible on the child's screen, they can pause any time, "
-                 "and they decide what parents are allowed to do from a permissions panel.",
-        "stack": ["Kotlin", "Jetpack Compose", "WebRTC", "Flask"],
+        "tag": "Family map, calls and screen time, honest about every bit.",
+        "about": "A family app for Android, Windows and the browser: see where everyone is, message, and make calls that really ring in their own window. "
+                 "Parents see each child's screen time today, can lock a device or ground certain apps (with a minute's warning), and set jobs and points. "
+                 "It is built to never feel controlling: the child sees exactly what the family sees, can pause sharing, and every lock or grounding is announced in the family chat.",
+        "stack": ["Kotlin", "Jetpack Compose", "C# Windows tracker", "WebRTC", "Flask"],
         "url": HOMEBASE_URL, "repo": "homebase",
-        "steps": ["Download the app and open it", "Create a family, or join with a code", "Share the map, chat and call"],
+        "steps": ["Open it in the browser, or install the Android app", "Create a family, or join with a code", "Share the map, call, and see screen time"],
     },
     {
         "id": "scout", "name": "Scout", "emoji": "🧭", "hue": 160, "kind": "ai",
@@ -100,10 +100,10 @@ PROJECTS = [
 ]
 
 HOMEBASE_STEPS = [
-    ("Download", "Get the APK from the Homebase page and open it on the Android phone or tablet. On a laptop, just open the website."),
-    ("Allow", "Android asks once to allow installs from your browser. Say yes."),
+    ("Open it", "On any phone or laptop just open the website and tap Add to Home screen. It is always the newest version. Or download the Android app."),
     ("Create or join", "A parent creates the family. Everyone else joins with an 8-character code."),
     ("Read and agree", "The child sees exactly what is shared and what never will be, then chooses."),
+    ("Link the laptop", "On Windows, link the tracker with a 6-digit code so screen time counts games and videos, never homework."),
 ]
 
 
@@ -112,8 +112,8 @@ MADE = {
     "homebase": {
         "steps": [
             "I wanted a family app that never feels controlling",
-            "I set the rules: consent first, pause any time. Claude helped write the app and server",
-            "We tested real calls together, fixed what broke, and I shipped it"
+            "I set the rules: consent first, honest screen time, nothing secret. Claude helped write the Android app, the Windows tracker and the server",
+            "We tested on my real laptop and tablet, fixed what broke (grounding, ringing, two tabs), and I shipped it"
         ],
         "ai": ""
     },

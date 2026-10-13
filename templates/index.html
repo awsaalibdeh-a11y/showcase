@@ -94,7 +94,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <div class="stats">
     <div class="stat"><b>{{ projects|length }}</b><span>projects</span></div>
     <div class="stat"><b>{{ projects|selectattr("url")|list|length }}</b><span>live links</span></div>
-    <div class="stat"><b>1</b><span>Android app</span></div>
+    <div class="stat"><b>3</b><span>Platforms for Homebase</span></div>
   </div>
 </div></header>
 
@@ -119,7 +119,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <div class="grid" id="grid">
   {% for p in projects %}
     <article class="card" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
-      {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android</span>{% endif %}
+      {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% endif %}
       <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
       <p class="about">{{ p.about }}</p>
       <div class="stack">{% for s in p.stack %}<span>{{ s }}</span>{% endfor %}{% if p.ai %}<span class="ai">AI: {{ p.ai }}</span>{% endif %}</div>
@@ -127,7 +127,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
       <details><summary>How I made it</summary><ol>{% for s in p.made %}<li>{{ s }}</li>{% endfor %}</ol></details>
       <div class="links">
         {% if p.id == "homebase" and not p.url %}<a class="btn solid" href="#homebase">See the setup</a>
-        {% elif p.url %}<a class="btn solid" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Download" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
+        {% elif p.url %}<a class="btn solid" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
         <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
       </div>
     </article>
@@ -136,17 +136,18 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 </div></section>
 
 <section id="homebase"><div class="wrap"><div class="feature">
-  <div class="kick" style="margin-bottom:12px">Featured · Android</div>
+  <div class="kick" style="margin-bottom:12px">Featured · Android, Windows and web</div>
   <h2>Homebase: <span class="silver">stay close,<br>stay yourself.</span></h2>
-  <p class="sub">A family app that shows where everyone is, lets you message, and makes calls that really ring. Nobody should feel watched: the person being located always sees exactly what is shared, can pause it, and chooses what parents can do.</p>
+  <p class="sub">A family app that shows where everyone is, lets you message, and makes calls that ring in their own window. Parents see each child's screen time today and can help with limits. Nobody should feel watched: the person being located always sees exactly what is shared, can pause it, and chooses what parents can do.</p>
   <div class="promise">
-    <div><b>What the family sees</b>Where you are while sharing is on, your battery level, and the messages you send.</div>
-    <div><b>What it never does</b>Hide itself, read your other apps or messages, turn on your mic or camera by itself, or lock your device.</div>
+    <div><b>What the family sees</b>Where you are while sharing is on, your battery, your screen time today (minutes playing or watching, never homework), and the messages you send.</div>
+    <div><b>What parents can do</b>Lock a device (never more than 4 hours a day) or ground certain apps with a minute's warning. Every lock and grounding is announced in the family chat.</div>
+    <div><b>What it never does</b>Hide itself, read your other apps or messages, turn on your mic or camera by itself, or secretly change your screen time.</div>
     <div><b>You are in control</b>Pause any time, set quiet hours, say "not now" to a location request, and switch off any parent permission from your own panel.</div>
   </div>
-  <p class="sub" style="margin-top:24px">Setup: download the app, allow installs once, a parent creates the family, then everyone else joins with an 8-character code.</p>
+  <p class="sub" style="margin-top:24px">Setup: open it in the browser and add it to your home screen (it always stays up to date), or install the Android app. A parent creates the family, then everyone else joins with an 8-character code. On Windows, link the tracker with a 6-digit code.</p>
   <div class="cta" style="justify-content:flex-start">
-    {% if homebase_url %}<a class="btn solid" href="{{ homebase_url }}/app" target="_blank" rel="noopener">Open on your laptop &#8599;</a><a class="btn" href="{{ homebase_url }}" target="_blank" rel="noopener">Android app</a>{% else %}<span class="btn">Download link coming soon</span>{% endif %}
+    {% if homebase_url %}<a class="btn solid" href="{{ homebase_url }}/app" target="_blank" rel="noopener">Open on your laptop &#8599;</a><a class="btn" href="{{ homebase_url }}/update" target="_blank" rel="noopener">Get the app</a>{% else %}<span class="btn">Download link coming soon</span>{% endif %}
     <a class="btn" href="{{ github }}homebase" target="_blank" rel="noopener">Read the code</a>
   </div>
 </div></div></section>
