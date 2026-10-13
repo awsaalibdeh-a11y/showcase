@@ -83,6 +83,44 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 .news b { color: #fff; font-weight: 600; margin-right: 8px; }
 .faq details { padding: 16px 0; border-top: 1px solid var(--line); } .faq details:last-child { border-bottom: 1px solid var(--line); } .faq p { color: var(--muted); margin-top: 10px; max-width: 70ch; font-size: 15px; }
 .totop { position: fixed; right: 18px; bottom: 18px; z-index: 30; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rim); background: var(--card2); color: #fff; cursor: pointer; font-size: 18px; opacity: 0; pointer-events: none; transition: opacity .25s; } .totop.on { opacity: 1; pointer-events: auto; }
+
+/* ---- tough pass: depth, glow, motion (all slow, none of it flashes; off for reduced motion) ---- */
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 8%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 30%, #000 8%, transparent 70%); }
+.hero .wrap { position: relative; z-index: 1; }
+.orb { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(90px); opacity: .22; pointer-events: none; animation: drift 22s ease-in-out infinite alternate; }
+.orb.a { left: -12vmax; top: -10vmax; background: #3b6dff; } .orb.b { right: -14vmax; top: 6vmax; background: #b13bff; animation-delay: -9s; }
+@keyframes drift { to { transform: translate(5vmax, 4vmax) scale(1.12); } }
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: rgba(255,255,255,.015); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.ticker .track { display: flex; gap: 46px; width: max-content; padding: 16px 0; animation: tick 48s linear infinite; }
+.ticker span { font-size: 15px; color: var(--muted); letter-spacing: .02em; white-space: nowrap; } .ticker b { color: #fff; font-weight: 500; margin-right: 8px; }
+@keyframes tick { to { transform: translateX(-50%); } }
+.card { --h: 220; --mx: 50%; --my: 0%; overflow: hidden; transform-style: preserve-3d; will-change: transform; }
+.card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx) var(--my), hsla(var(--h), 90%, 70%, .16), transparent 62%); }
+.card:hover::before { opacity: 1; }
+.card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, hsl(var(--h), 85%, 65%), transparent); opacity: .55; }
+.card:hover { border-color: hsla(var(--h), 70%, 60%, .45); }
+.card .tile { box-shadow: inset 0 1px 0 rgba(255,255,255,.17), inset 0 0 0 1px rgba(255,255,255,.04), 0 14px 30px rgba(0,0,0,.6), 0 0 28px hsla(var(--h), 90%, 60%, .18); }
+.js .rv { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.js .rv.in { opacity: 1; transform: none; }
+.stat b { font-variant-numeric: tabular-nums; }
+.btn.solid { box-shadow: 0 0 0 1px rgba(255,255,255,.2), 0 10px 40px rgba(130,160,255,.22); }
+h2 .silver { text-shadow: none; }
+#pal { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.66); backdrop-filter: blur(8px); display: none; align-items: flex-start; justify-content: center; padding-top: 14vh; }
+#pal.on { display: flex; }
+#pal .box { width: min(560px, 92%); border: 1px solid #34343a; border-radius: 20px; background: #0f0f11; box-shadow: 0 40px 120px rgba(0,0,0,.8); overflow: hidden; }
+#pal input { width: 100%; padding: 18px 20px; background: transparent; border: 0; border-bottom: 1px solid var(--line); color: #fff; font: inherit; font-size: 17px; outline: none; }
+#pal ul { list-style: none; max-height: 46vh; overflow: auto; padding: 8px; }
+#pal li { display: flex; gap: 12px; align-items: center; padding: 11px 14px; border-radius: 12px; cursor: pointer; color: #d4d4da; } #pal li small { margin-left: auto; color: var(--muted); }
+#pal li.sel { background: #1d1d22; color: #fff; }
+#pal .hint { padding: 10px 16px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+kbd { font: inherit; font-size: 12px; padding: 2px 7px; border: 1px solid #3a3a40; border-radius: 6px; background: #17171a; color: #cfcfd6; }
+.kbtn { margin-left: 18px; }
+nav b { white-space: nowrap; font-size: 15px; } nav .wrap > div { display: flex; align-items: center; }
+@media (max-width: 560px) { .kbtn kbd { display: none; } nav div a:nth-child(n+2) { display: none; } nav .wrap > div .kbtn { margin-right: 0 !important; } }
+@media (prefers-reduced-motion: reduce) { .orb, .ticker .track { animation: none !important; } .js .rv { opacity: 1; transform: none; transition: none; } }
 .hide { display: none !important; }
 :focus-visible { outline: 2px solid #8ab4ff; outline-offset: 3px; border-radius: 8px; }
 .skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #000; padding: 8px 14px; border-radius: 10px; z-index: 50; } .skip:focus { left: 8px; }
@@ -99,9 +137,9 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 <body>
 <div id="bar"></div><button class="totop" id="top" aria-label="Back to top">&#8593;</button>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><button class="btn sm kbtn" id="palbtn" style="margin:0 6px 0 0;padding:6px 12px">Jump <kbd>Ctrl K</kbd></button><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
 
-<header class="hero"><div class="wrap">
+<header class="hero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
   <div class="kick">The collection</div>
   <h1 class="silver">Everything<br>I've built.</h1>
   <p class="lead">{{ projects|length }} projects, each one real and online. Open any of them, see how it works, and see how I made it.</p>
@@ -113,6 +151,8 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
     <div class="stat"><b>3</b><span>Platforms for Homebase</span></div>
   </div>
 </div></header>
+
+<div class="ticker" aria-hidden="true"><div class="track">{% for k in range(2) %}{% for p in projects %}<span><b>{{ p.emoji }} {{ p.name }}</b>{{ p.tag }}</span>{% endfor %}{% endfor %}</div></div>
 
 <section id="reveal"><div class="wrap">
   <h2>The <span class="silver">reveal</span></h2>
@@ -135,7 +175,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <div class="none" id="none">No project matches that. Try a different word.</div>
   <div class="grid" id="grid">
   {% for p in projects %}
-    <article class="card" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
+    <article class="card rv" style="--h: {{ p.hue }}" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
       {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% endif %}
       <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
       <p class="about">{{ p.about }}</p>
@@ -153,7 +193,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   </div>
 </div></section>
 
-<section id="homebase"><div class="wrap"><div class="feature">
+<section id="homebase"><div class="wrap"><div class="feature rv">
   <div class="kick" style="margin-bottom:12px">Featured · Android, Windows and web</div>
   <h2>Homebase: <span class="silver">stay close,<br>stay yourself.</span></h2>
   <p class="sub">A family app that shows where everyone is, lets you message, and makes calls that ring in their own window. Parents see each child's screen time today and can help with limits. Nobody should feel watched: the person being located always sees exactly what is shared, can pause it, and chooses what parents can do.</p>
@@ -196,6 +236,12 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
     {% for name, text, kind in credits[1:] %}<div class="{{ kind }}"><b>{{ name }}</b><span>{{ text }}</span></div>{% endfor %}
   </div>
 </div></section>
+
+<div id="pal" role="dialog" aria-modal="true" aria-label="Jump to a project"><div class="box">
+  <input id="palq" placeholder="Jump to a project or section..." autocomplete="off">
+  <ul id="pall"></ul>
+  <div class="hint"><kbd>&uarr;</kbd> <kbd>&darr;</kbd> to move &middot; <kbd>Enter</kbd> to open &middot; <kbd>Esc</kbd> to close</div>
+</div></div>
 
 <footer><div class="wrap">Built one idea at a time. Free-tier sites can take a few seconds to wake up on the first visit.</div></footer>
 
@@ -249,6 +295,60 @@ document.addEventListener("click", e => {
 const bar = document.getElementById("bar"), topb = document.getElementById("top");
 addEventListener("scroll", () => { const h = document.documentElement; bar.style.width = (h.scrollTop / Math.max(1, h.scrollHeight - innerHeight) * 100) + "%"; topb.classList.toggle("on", h.scrollTop > 900); }, { passive: true });
 topb.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ---- tough pass JS ---- */
+document.documentElement.classList.add("js");
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* scroll reveal, with a safety net so nothing can stay hidden */
+const rv = document.querySelectorAll(".rv");
+if ("IntersectionObserver" in window && !calm) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .08 });
+  rv.forEach((el, i) => { el.style.transitionDelay = Math.min(i % 4, 3) * 70 + "ms"; io.observe(el); });
+  setTimeout(() => rv.forEach(el => el.classList.add("in")), 4000);
+} else rv.forEach(el => el.classList.add("in"));
+/* count the stats up */
+document.querySelectorAll(".stat b").forEach(b => {
+  const n = parseInt(b.textContent, 10); if (!n || calm) return; let t0 = null; b.textContent = "0";
+  const step = t => { t0 = t0 || t; const k = Math.min(1, (t - t0) / 1100); b.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+});
+/* card glow follows the mouse, with a small 3D tilt */
+if (!calm && matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".card").forEach(c => {
+    c.addEventListener("mousemove", e => {
+      const r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      c.style.setProperty("--mx", x + "px"); c.style.setProperty("--my", y + "px");
+      c.style.transform = "perspective(900px) rotateX(" + ((y / r.height - .5) * -4) + "deg) rotateY(" + ((x / r.width - .5) * 5) + "deg) translateY(-3px)";
+    });
+    c.addEventListener("mouseleave", () => { c.style.transform = ""; });
+  });
+}
+/* command palette: Ctrl or Cmd + K */
+const pal = document.getElementById("pal"), palq = document.getElementById("palq"), pall = document.getElementById("pall");
+const ITEMS = [...document.querySelectorAll("#grid .card")].map(c => ({ id: c.dataset.id, name: c.querySelector("h3").textContent, em: c.querySelector(".tile").textContent, tag: c.querySelector(".tag").textContent, link: (c.querySelector(".links a.solid") || {}).href }))
+  .concat([["#reveal", "Watch the reveal", "▶"], ["#homebase", "Homebase features", "🏠"], ["#news", "What's new", "📰"], ["#tech", "What I used", "🛠️"], ["#faq", "Common questions", "❓"], ["#credits", "Credits", "⭐"]].map(([h, n, e]) => ({ name: n, em: e, tag: "section", hash: h })));
+let sel = 0, shown = [];
+function palRender() {
+  const w = palq.value.trim().toLowerCase();
+  shown = ITEMS.filter(i => !w || (i.name + " " + i.tag).toLowerCase().includes(w));
+  sel = Math.min(sel, Math.max(0, shown.length - 1));
+  pall.innerHTML = "";
+  shown.forEach((i, k) => { const li = document.createElement("li"); li.className = k === sel ? "sel" : ""; const e = document.createElement("span"); e.textContent = i.em; const n = document.createElement("span"); n.textContent = i.name; const t = document.createElement("small"); t.textContent = i.hash ? "section" : (i.link ? "open site" : "card"); li.append(e, n, t); li.onclick = () => palGo(i); pall.appendChild(li); });
+}
+function palGo(i) { palClose(); if (i.hash) location.hash = i.hash; else if (i.link) window.open(i.link, "_blank", "noopener"); else openCard(i.id); }
+function palOpen() { pal.classList.add("on"); palq.value = ""; sel = 0; palRender(); palq.focus(); }
+function palClose() { pal.classList.remove("on"); }
+document.getElementById("palbtn").addEventListener("click", palOpen);
+pal.addEventListener("click", e => { if (e.target === pal) palClose(); });
+palq.addEventListener("input", () => { sel = 0; palRender(); });
+addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); pal.classList.contains("on") ? palClose() : palOpen(); return; }
+  if (!pal.classList.contains("on")) return;
+  if (e.key === "Escape") palClose();
+  else if (e.key === "ArrowDown") { e.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); palRender(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); sel = Math.max(0, sel - 1); palRender(); }
+  else if (e.key === "Enter" && shown[sel]) palGo(shown[sel]);
+});
 </script>
 <script src="/static/tour.js" data-app="showcase" defer></script>
 <script src="/static/hub.js" data-app="showcase" defer></script>
