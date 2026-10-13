@@ -89,6 +89,15 @@ PROJECTS = [
         "steps": ["Upload notes, a PDF or a photo", "Get a plan, flashcards and quizzes", "Ask the tutor and play the games"],
     },
     {
+        "id": "womanten", "name": "Womanten", "emoji": "🌱", "hue": 12, "kind": "app",
+        "tag": "A confidence and habits coach with a push-up app lock.",
+        "about": "An app for building confidence and healthy habits: an AI coach, a weekly plan, AI-made workout and food plans, habits, a journal, a cycle tracker and challenges with friends. "
+                 "On Android, TikTok, Instagram and YouTube stay locked until you do a push-up on camera, and each push-up earns 10 scrolls. It never rates looks and never counts calories.",
+        "stack": ["Kotlin", "ML Kit pose detection", "Flask", "OpenAI"],
+        "url": "https://womanten.onrender.com", "repo": "womanten",
+        "steps": ["Open the site, or install the Android app", "Pick what you want to work on and build your week", "Lock your scrolling apps and earn scrolls with push-ups"],
+    },
+    {
         "id": "nonsense", "name": "Totally Normal Website", "emoji": "🤪", "hue": 310, "kind": "game",
         "tag": "A deliberately terrible website. Nothing makes sense.",
         "about": "A joke site with a bad UI on purpose: a runaway button, a potato to chat with, a calculator where 2+2 is fish, a download bar for more RAM and a dozen more toys. "
@@ -202,6 +211,14 @@ MADE = {
         ],
         "ai": "OpenAI API"
     },
+    "womanten": {
+        "steps": [
+            "I wanted an app like Critique AI, mixing the confidence coach and the habit tracker, and I named it Womanten",
+            "I decided what it must never do (rate looks, count calories) and what it must do: lock the scrolling apps until you do a push-up. Claude helped build it; the OpenAI API writes the plans and coaches",
+            "I asked for it to be more useful, tested it, fixed what felt wrong, and put it online"
+        ],
+        "ai": "OpenAI API"
+    },
     "nonsense": {
         "steps": [
             "I wanted the worst website I could think of, on purpose",
@@ -237,7 +254,7 @@ CREDITS = [
     ("Me", "Every idea, design decision, test and \"make it better\". I made these.", "primary"),
     ("Claude", "Anthropic's AI, helped me write and test the code and get it online.", "helper"),
     ("ChatGPT Agent Builder", "Where I first built the Tripmate agent and learned how agents work.", "tool"),
-    ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate and Cramly.", "tool"),
+    ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate, Cramly and Womanten.", "tool"),
 ]
 
 
