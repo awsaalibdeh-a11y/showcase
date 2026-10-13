@@ -89,6 +89,15 @@ PROJECTS = [
         "steps": ["Upload notes, a PDF or a photo", "Get a plan, flashcards and quizzes", "Ask the tutor and play the games"],
     },
     {
+        "id": "nonsense", "name": "Totally Normal Website", "emoji": "🤪", "hue": 310, "kind": "game",
+        "tag": "A deliberately terrible website. Nothing makes sense.",
+        "about": "A joke site with a bad UI on purpose: a runaway button, a potato to chat with, a calculator where 2+2 is fish, a download bar for more RAM and a dozen more toys. "
+                 "It opens with a photosensitivity warning and has a Calm mode with no flashing or movement.",
+        "stack": ["Flask", "Vanilla JS", "Web Audio"],
+        "url": "https://totally-normal-website.onrender.com", "repo": "totally-normal-website",
+        "steps": ["Read the warning and pick Calm mode or the chaos", "Press anything. Most things do something", "Try to catch the button. It gives up eventually"],
+    },
+    {
         "id": "control", "name": "Cramly Control", "emoji": "🛠️", "hue": 0, "kind": "tool", "private": True,
         "tag": "The owner panel for Cramly.",
         "about": "A separate private panel for running Cramly: see accounts, send a personal message with a unique link, "
@@ -192,6 +201,14 @@ MADE = {
             "I asked for more features each round until it felt right"
         ],
         "ai": "OpenAI API"
+    },
+    "nonsense": {
+        "steps": [
+            "I wanted the worst website I could think of, on purpose",
+            "I chose every bad idea: the colours, the runaway button, the potato, the nonsense answers",
+            "I asked for a seizure warning and a Calm mode, tested the buttons until they worked, and put it online"
+        ],
+        "ai": ""
     },
     "control": {
         "steps": [
