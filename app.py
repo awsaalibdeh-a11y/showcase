@@ -19,7 +19,7 @@ def home():
         for t in p["stack"]:
             tech.setdefault(t, []).append(p["name"])
     tech = sorted(tech.items(), key=lambda kv: (-len(kv[1]), kv[0]))
-    return render_template("index.html", tech=tech, features=data.HOMEBASE_FEATURES, projects=data.PROJECTS, github=data.GITHUB, homebase_url=data.HOMEBASE_URL, process=data.PROCESS, credits=data.CREDITS)
+    return render_template("index.html", news=data.NEWS, faq=data.FAQ, tech=tech, features=data.HOMEBASE_FEATURES, projects=data.PROJECTS, github=data.GITHUB, homebase_url=data.HOMEBASE_URL, process=data.PROCESS, credits=data.CREDITS)
 
 
 @app.get("/reveal")

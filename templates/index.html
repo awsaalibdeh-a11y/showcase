@@ -73,6 +73,16 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 .fgrid div { padding: 16px 18px; border-radius: 18px; background: #0d0d0f; border: 1px solid var(--line); font-size: 14px; color: #b9b9c2; } .fgrid i { font-style: normal; font-size: 22px; display: block; margin-bottom: 6px; } .fgrid b { display: block; color: #fff; font-size: 15.5px; font-weight: 600; margin-bottom: 3px; }
 .techs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .tc { display: flex; align-items: baseline; gap: 10px; padding: 12px 20px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); transition: border-color .2s; } .tc:hover { border-color: #3a3a40; } .tc b { font-size: 22px; font-weight: 300; color: #fff; } .tc span { color: var(--muted); font-size: 14px; }
+#bar { position: fixed; left: 0; top: 0; height: 2px; width: 0; background: linear-gradient(90deg, #5b93ff, #ececf0); z-index: 40; }
+.sortsel { padding: 10px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-size: 14px; }
+.card.flash { animation: flash 1.6s ease; } @keyframes flash { 0%, 60% { border-color: #8ab4ff; box-shadow: 0 0 0 4px rgba(138,180,255,.18); } }
+.btn.sm { padding: 9px 14px; font-size: 13px; color: var(--muted); }
+.livesum { margin-top: 18px; color: var(--muted); font-size: 14px; } .livesum b { color: #fff; font-weight: 600; }
+.news { margin-top: 26px; display: grid; gap: 0; border-left: 1px solid var(--line); margin-left: 6px; }
+.news div { position: relative; padding: 4px 0 22px 26px; color: #c3c3cb; font-size: 15px; } .news div::before { content: ""; position: absolute; left: -5px; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: #ececf0; }
+.news b { color: #fff; font-weight: 600; margin-right: 8px; }
+.faq details { padding: 16px 0; border-top: 1px solid var(--line); } .faq details:last-child { border-bottom: 1px solid var(--line); } .faq p { color: var(--muted); margin-top: 10px; max-width: 70ch; font-size: 15px; }
+.totop { position: fixed; right: 18px; bottom: 18px; z-index: 30; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rim); background: var(--card2); color: #fff; cursor: pointer; font-size: 18px; opacity: 0; pointer-events: none; transition: opacity .25s; } .totop.on { opacity: 1; pointer-events: auto; }
 .hide { display: none !important; }
 :focus-visible { outline: 2px solid #8ab4ff; outline-offset: 3px; border-radius: 8px; }
 .skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #000; padding: 8px 14px; border-radius: 10px; z-index: 50; } .skip:focus { left: 8px; }
@@ -87,14 +97,16 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
 </style>
 </head>
 <body>
+<div id="bar"></div><button class="totop" id="top" aria-label="Back to top">&#8593;</button>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#tech">Tech</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="wrap">
   <div class="kick">The collection</div>
   <h1 class="silver">Everything<br>I've built.</h1>
   <p class="lead">{{ projects|length }} projects, each one real and online. Open any of them, see how it works, and see how I made it.</p>
   <div class="cta"><a class="btn solid" href="#reveal">&#9654; Watch the reveal</a><a class="btn" href="#projects">Browse the projects</a></div>
+  <div class="livesum" id="livesum">Checking which sites are awake&hellip;</div>
   <div class="stats">
     <div class="stat"><b>{{ projects|length }}</b><span>projects</span></div>
     <div class="stat"><b>{{ projects|selectattr("url")|list|length }}</b><span>live links</span></div>
@@ -114,6 +126,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <p class="sub">Every card has the three-step "how to use it" and the three-step "how I made it".</p>
   <div class="tools">
   <input class="search" id="q" type="search" placeholder="Search projects  ( / )" aria-label="Search projects" autocomplete="off">
+  <select class="sortsel" id="sort" aria-label="Sort projects"><option value="def">My order</option><option value="az">A to Z</option><option value="live">Online first</option></select>
   <button class="btn" id="wake" title="Free-tier sites sleep when nobody visits. This wakes them all up in the background.">&#9889; Wake all sites</button>
   </div>
   <div class="chips" id="chips">
@@ -122,7 +135,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   <div class="none" id="none">No project matches that. Try a different word.</div>
   <div class="grid" id="grid">
   {% for p in projects %}
-    <article class="card" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
+    <article class="card" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
       {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% endif %}
       <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
       <p class="about">{{ p.about }}</p>
@@ -133,6 +146,7 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
         {% if p.id == "homebase" and not p.url %}<a class="btn solid" href="#homebase">See the setup</a>
         {% elif p.url %}<a class="btn solid" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
         <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
+        <button class="btn sm" data-copy="{{ p.id }}" title="Copy a link to this project">&#128279; Copy link</button>
       </div>
     </article>
   {% endfor %}
@@ -157,10 +171,21 @@ footer { padding: 6vh 0 10vh; text-align: center; color: var(--muted); font-size
   </div>
 </div></div></section>
 
+<section id="news"><div class="wrap">
+  <h2>What's <span class="silver">new</span></h2>
+  <p class="sub">The latest things that actually shipped.</p>
+  <div class="news">{% for who, what in news %}<div><b>{{ who }}</b>{{ what }}</div>{% endfor %}</div>
+</div></section>
+
 <section id="tech"><div class="wrap">
   <h2>What I <span class="silver">used</span></h2>
   <p class="sub">Counted from the projects above. The bigger the number, the more projects use it.</p>
   <div class="techs">{% for name, used in tech %}<div class="tc" title="{{ used|join(', ') }}"><b>{{ used|length }}</b><span>{{ name }}</span></div>{% endfor %}</div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions <span class="silver">people ask</span></h2>
+  <div class="faq" style="margin-top:24px">{% for qq, a in faq %}<details><summary>{{ qq }}</summary><p>{{ a }}</p></details>{% endfor %}</div>
 </div></section>
 
 <section id="credits"><div class="wrap credits">
@@ -192,16 +217,38 @@ async function status(tries = 0) {
   let pending = 0;
   try {
     const d = await (await fetch("/api/status")).json();
-    document.querySelectorAll("[data-live]").forEach(el => { const st = d.status[el.dataset.live]; if (!st) { pending++; return; } el.querySelector(".dot").className = "dot " + st.state; el.querySelector("span").textContent = WORDS[st.state] + (st.state === "online" ? " · " + (st.ms < 1000 ? st.ms + " ms" : (st.ms / 1000).toFixed(1) + " s") : ""); if (st.state !== "online") pending++; });
+    document.querySelectorAll("[data-live]").forEach(el => { const st = d.status[el.dataset.live]; if (st) STATE[el.dataset.live] = st.state; if (!st) { pending++; return; } el.querySelector(".dot").className = "dot " + st.state; el.querySelector("span").textContent = WORDS[st.state] + (st.state === "online" ? " · " + (st.ms < 1000 ? st.ms + " ms" : (st.ms / 1000).toFixed(1) + " s") : ""); if (st.state !== "online") pending++; });
+    const all = document.querySelectorAll("[data-live]").length, on = Object.values(STATE).filter(v => v === "online").length;
+    if (Object.keys(STATE).length) document.getElementById("livesum").innerHTML = on === all ? "<b>All " + all + "</b> sites are online right now." : "<b>" + on + " of " + all + "</b> sites are online right now. The rest are waking up.";
   } catch (e) { pending = 1; }
   if (pending && tries < 12) setTimeout(() => status(tries + 1), 6000);
 }
+const STATE = {};
 status();
 document.getElementById("wake").addEventListener("click", e => {
   const urls = [...document.querySelectorAll('.links a[href^="http"]')].map(a => a.href).filter(h => !h.includes("github.com"));
   urls.forEach(u => fetch(u, { mode: "no-cors" }).catch(() => {}));
   e.target.textContent = "✔ Waking " + urls.length + " sites…"; setTimeout(() => status(), 8000); setTimeout(() => { e.target.innerHTML = "&#9889; Wake all sites"; }, 6000);
 });
+
+/* sort, deep links, copy link, progress bar, back to top */
+const grid = document.getElementById("grid"), order = [...grid.children];
+document.getElementById("sort").addEventListener("change", e => {
+  const v = e.target.value, cards = [...order];
+  if (v === "az") cards.sort((a, b) => a.dataset.n.localeCompare(b.dataset.n));
+  if (v === "live") cards.sort((a, b) => (STATE[b.dataset.id] === "online") - (STATE[a.dataset.id] === "online"));
+  cards.forEach(c => grid.appendChild(c));
+});
+function openCard(id) { const c = document.getElementById("p-" + id); if (!c) return; c.scrollIntoView({ block: "center" }); c.classList.remove("flash"); void c.offsetWidth; c.classList.add("flash"); }
+if (location.hash.startsWith("#p-")) setTimeout(() => openCard(location.hash.slice(3)), 300);
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-copy]"); if (!b) return;
+  const url = location.origin + location.pathname + "#p-" + b.dataset.copy, old = b.innerHTML;
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => { b.textContent = "Copied"; }, () => { prompt("Copy this link", url); }).finally(() => setTimeout(() => { b.innerHTML = old; }, 1500));
+});
+const bar = document.getElementById("bar"), topb = document.getElementById("top");
+addEventListener("scroll", () => { const h = document.documentElement; bar.style.width = (h.scrollTop / Math.max(1, h.scrollHeight - innerHeight) * 100) + "%"; topb.classList.toggle("on", h.scrollTop > 900); }, { passive: true });
+topb.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
 </script>
 <script src="/static/tour.js" data-app="showcase" defer></script>
 <script src="/static/hub.js" data-app="showcase" defer></script>

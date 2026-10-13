@@ -222,3 +222,22 @@ CREDITS = [
     ("ChatGPT Agent Builder", "Where I first built the Tripmate agent and learned how agents work.", "tool"),
     ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate and Cramly.", "tool"),
 ]
+
+
+# Real milestones, newest first. Only things that actually shipped.
+NEWS = [
+    ("Homebase", "Two tabs everywhere, a ringing call window on Windows, and a built-in update guide for the old app."),
+    ("Homebase", "Parents see each child's screen time today on the Family tab, on the web and on Android."),
+    ("Homebase", "Grounding fixed so only the grounded app closes. The tracker now updates itself."),
+    ("Homebase", "Windows tracker, locks with a 4-hour daily cap, grounding with a one-minute warning, jobs and points."),
+    ("Cramly", "One Cramly account works across every app, with owner switches for bans, time-outs and a kill switch."),
+    ("Showcase", "The reveal got sound, live online/waking status, search and a share image."),
+]
+
+FAQ = [
+    ("Are these real?", "Yes. Every card links to a live site you can open now. Free-tier sites sleep when nobody visits, so the first load can take up to 30 seconds. The Wake all sites button warms them up."),
+    ("Who made them?", "I did: the ideas, the choices and the testing. Claude helped me write and test the code, and some projects use the OpenAI API for their AI."),
+    ("Is Homebase spying on kids?", "No. The child sees exactly what the family sees, can pause sharing, and every lock or grounding is announced in the family chat. It never hides itself."),
+    ("Why does Homebase count screen time?", "So a parent can talk about it with real numbers. It counts playing and watching, never homework, and the minutes are never changed in secret."),
+    ("Can I use them on my phone?", "Yes. Everything works in a phone browser, and most can be added to the home screen."),
+]
