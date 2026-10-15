@@ -98,6 +98,15 @@ PROJECTS = [
         "steps": ["Open the site, or install the Android app", "Pick what you want to work on and build your week", "Lock your scrolling apps and earn scrolls with push-ups"],
     },
     {
+        "id": "whatif", "name": "Whatif", "emoji": "🌀", "hue": 25, "kind": "ai",
+        "tag": "Type a what-if and watch the world change.",
+        "about": "An alternate-history storyteller. Ask any what-if and the AI writes a timeline that fills in while you watch, the domino chain of cause and effect, "
+                 "who wins and loses and how believable it is. Change any event to branch a new story, keep them all in your own Multiverse, and share one as a link or a poster.",
+        "stack": ["Flask", "OpenAI", "Streaming"],
+        "url": "https://whatif-kkq1.onrender.com", "repo": "whatif",
+        "steps": ["Type a what-if or pick today's", "Watch the timeline write itself", "Change an event to branch it, then share the link"],
+    },
+    {
         "id": "nonsense", "name": "Totally Normal Website", "emoji": "🤪", "hue": 310, "kind": "game",
         "tag": "A deliberately terrible website. Nothing makes sense.",
         "about": "A joke site with a bad UI on purpose: a runaway button, a potato to chat with, a calculator where 2+2 is fish, a download bar for more RAM and a dozen more toys. "
@@ -219,6 +228,14 @@ MADE = {
         ],
         "ai": "OpenAI API"
     },
+    "whatif": {
+        "steps": [
+            "I asked for website ideas and picked the what-if one",
+            "I decided it should write the story live, let you branch any event and share it as a link. Claude helped build it; the OpenAI API writes the stories",
+            "I tested it on real questions, fixed where the AI slipped, and put it online"
+        ],
+        "ai": "OpenAI API"
+    },
     "nonsense": {
         "steps": [
             "I wanted the worst website I could think of, on purpose",
@@ -254,7 +271,7 @@ CREDITS = [
     ("Me", "Every idea, design decision, test and \"make it better\". I made these.", "primary"),
     ("Claude", "Anthropic's AI, helped me write and test the code and get it online.", "helper"),
     ("ChatGPT Agent Builder", "Where I first built the Tripmate agent and learned how agents work.", "tool"),
-    ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate, Cramly and Womanten.", "tool"),
+    ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate, Cramly, Womanten and Whatif.", "tool"),
 ]
 
 
