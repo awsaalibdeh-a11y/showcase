@@ -132,12 +132,49 @@ nav b { white-space: nowrap; font-size: 15px; } nav .wrap > div { display: flex;
 .none { display: none; text-align: center; color: var(--muted); padding: 40px 0; } .none.on { display: block; }
 @media (max-width: 640px) { .reveal-frame { aspect-ratio: 3 / 4; } }
 @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } nav div a:nth-child(n+3) { display: none; } }
+
+/* card pictures: a real screenshot inside a small browser window, or a designed card where a screenshot would show something private */
+.grid { align-items: start; }
+.shot { display: block; position: relative; margin: -24px -24px 4px; aspect-ratio: 960 / 520; overflow: hidden; background: #0a0a0a; border-bottom: 1px solid var(--line); }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2, .7, .2, 1); }
+.card:hover .shot img { transform: scale(1.04); }
+.shot.art { display: grid; place-content: center; justify-items: center; gap: 6px; text-align: center; padding: 0 12%;
+  background: radial-gradient(110% 95% at 50% 0%, hsla(var(--h), 42%, 26%, .8), hsla(var(--h), 30%, 9%, 1) 62%, #0a0a0a);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03); }
+.shot.art::before { content: ""; position: absolute; inset: 0; background: repeating-radial-gradient(circle at 50% 120%, transparent 0 34px, rgba(255,255,255,.035) 34px 35px); }
+.art-emoji { position: relative; font-size: 62px; line-height: 1; filter: drop-shadow(0 14px 22px rgba(0,0,0,.65)); }
+.art-name { position: relative; font-size: 28px; font-weight: 300; letter-spacing: -.03em; }
+.art-tag { position: relative; color: #a9a9a9; font-size: 13.5px; line-height: 1.35; }
+.badge { z-index: 2; }
+
+/* the timeline: one bar per project, from its first commit to its last */
+.gantt { margin-top: 30px; padding: 22px 24px 14px; border: 1px solid var(--line); border-radius: 24px; background: var(--card); }
+.g-axis, .g-row { display: grid; grid-template-columns: 168px 1fr; align-items: center; gap: 14px; }
+.g-axis { margin-bottom: 8px; color: var(--muted); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+.g-ticks { position: relative; height: 18px; } .g-ticks span { position: absolute; top: 0; white-space: nowrap; }
+.g-row { min-height: 40px; border-top: 1px solid rgba(255,255,255,.04); }
+.g-name { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 14.5px; min-width: 0; }
+.g-name i { font-style: normal; width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 9px; background: #1a1a1a; font-size: 15px; }
+.g-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-name:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.g-track { position: relative; height: 40px; background-image: linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px); background-size: var(--week) 100%; }
+.g-bar { position: absolute; top: 9px; height: 22px; border-radius: 99px; display: flex; align-items: center; padding: 0 10px; overflow: hidden;
+  background: linear-gradient(180deg, #dedede, #a6a6a6); color: #0a0a0a; font-size: 11.5px; font-weight: 600; white-space: nowrap; transition: background .25s, box-shadow .25s;
+  transform-origin: left; }
+.g-row:hover .g-bar { background: linear-gradient(180deg, hsl(var(--h), 40%, 70%), hsl(var(--h), 36%, 54%)); box-shadow: 0 0 20px hsla(var(--h), 40%, 60%, .3); }
+section[id] { scroll-margin-top: 64px; }
+.g-note { position: absolute; top: 12px; margin-left: 8px; color: var(--muted); font-size: 11.5px; white-space: nowrap; }
+.js .gantt.rv .g-bar { transform: scaleX(0); transition: transform .9s cubic-bezier(.2, .7, .2, 1); } .js .gantt.rv.in .g-bar { transform: none; }
+.g-foot { color: var(--muted); font-size: 13px; margin-top: 14px; }
+@media (max-width: 700px) { .g-axis, .g-row { grid-template-columns: 1fr; gap: 2px; } .g-axis .g-lab { display: none; } .g-row { padding: 6px 0 2px; } .g-track { height: 30px; } .g-bar { top: 4px; } .g-note { top: 7px; } .gantt { padding: 18px 16px 10px; } }
+@media (prefers-reduced-motion: reduce) { .js .gantt.rv .g-bar { transform: none; transition: none; } .shot img { transition: none; } }
 </style>
+<link rel="stylesheet" href="/static/demos.css">
 </head>
 <body>
 <div id="bar"></div><button class="totop" id="top" aria-label="Back to top">&#8593;</button>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><button class="btn sm kbtn" id="palbtn" style="margin:0 6px 0 0;padding:6px 12px">Jump <kbd>Ctrl K</kbd></button><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><button class="btn sm kbtn" id="palbtn" style="margin:0 6px 0 0;padding:6px 12px">Jump <kbd>Ctrl K</kbd></button><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#timeline">Timeline</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
   <div class="kick">The collection</div>
@@ -147,8 +184,9 @@ nav b { white-space: nowrap; font-size: 15px; } nav .wrap > div { display: flex;
   <div class="livesum" id="livesum">Checking which sites are awake&hellip;</div>
   <div class="stats">
     <div class="stat"><b>{{ projects|length }}</b><span>projects</span></div>
+    <div class="stat"><b>{{ tl.days }}</b><span>days to build them</span></div>
+    <div class="stat"><b>{{ tl.commits }}</b><span>commits</span></div>
     <div class="stat"><b>{{ projects|selectattr("url")|list|length }}</b><span>live links</span></div>
-    <div class="stat"><b>3</b><span>Platforms for Homebase</span></div>
   </div>
 </div></header>
 
@@ -163,7 +201,7 @@ nav b { white-space: nowrap; font-size: 15px; } nav .wrap > div { display: flex;
 
 <section id="projects"><div class="wrap">
   <h2>All the <span class="silver">projects</span></h2>
-  <p class="sub">Every card has the three-step "how to use it" and the three-step "how I made it".</p>
+  <p class="sub">Every card has a playable demo, the three-step "how to use it" and the three-step "how I made it".</p>
   <div class="tools">
   <input class="search" id="q" type="search" placeholder="Search projects  ( / )" aria-label="Search projects" autocomplete="off">
   <select class="sortsel" id="sort" aria-label="Sort projects"><option value="def">My order</option><option value="az">A to Z</option><option value="live">Online first</option></select>
@@ -175,22 +213,40 @@ nav b { white-space: nowrap; font-size: 15px; } nav .wrap > div { display: flex;
   <div class="none" id="none">No project matches that. Try a different word.</div>
   <div class="grid" id="grid">
   {% for p in projects %}
-    <article class="card rv" style="--h: {{ p.hue }}" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
+    <article class="card rv" style="--h: {{ warm.get(p.id, p.hue) }}" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
       {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% endif %}
+      {% if p.id in shots %}<a class="shot" href="{{ p.url }}" target="_blank" rel="noopener" tabindex="-1" aria-label="Open {{ p.name }}"><img src="/static/shots/{{ p.id }}.jpg" width="960" height="520" loading="lazy" decoding="async" alt="A look at {{ p.name }}"></a>
+      {% elif not p.private %}<div class="shot art" style="--h: {{ warm.get(p.id, p.hue) }}" aria-hidden="true"><span class="art-emoji">{{ p.emoji }}</span><span class="art-name">{{ p.name }}</span><span class="art-tag">{{ p.tag }}</span></div>{% endif %}
       <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
       <p class="about">{{ p.about }}</p>
       <div class="stack">{% for s in p.stack %}<span>{{ s }}</span>{% endfor %}{% if p.ai %}<span class="ai">AI: {{ p.ai }}</span>{% endif %}</div>
       <details><summary>How to use it</summary><ol>{% for s in p.steps %}<li>{{ s }}</li>{% endfor %}</ol></details>
       <details><summary>How I made it</summary><ol>{% for s in p.made %}<li>{{ s }}</li>{% endfor %}</ol></details>
       <div class="links">
+        {% if not p.private %}<button class="btn solid demo-btn" type="button" data-demo="{{ p.id }}">&#9654; Try a demo</button>{% endif %}
         {% if p.id == "homebase" and not p.url %}<a class="btn solid" href="#homebase">See the setup</a>
-        {% elif p.url %}<a class="btn solid" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
+        {% elif p.url %}<a class="btn open" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
         <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
         <button class="btn sm" data-copy="{{ p.id }}" title="Copy a link to this project">&#128279; Copy link</button>
       </div>
     </article>
   {% endfor %}
   </div>
+</div></section>
+
+<section id="timeline"><div class="wrap">
+  <h2>How fast I <span class="silver">built it</span></h2>
+  <p class="sub">{{ projects|length }} projects in {{ tl.days }} days, many of them at the same time. Each bar runs from a project's first commit to its last, read straight from its git history on {{ tl.snapshot }}.</p>
+  <div class="gantt rv" role="list" aria-label="Timeline of when each project was built" style="--week: {{ tl.week }}%">
+    <div class="g-axis" aria-hidden="true"><span class="g-lab"></span><div class="g-ticks">{% for t in tl.ticks %}<span style="left: {{ t.pct }}%">{{ t.label }}</span>{% endfor %}</div></div>
+    {% for r in tl.rows %}
+    <div class="g-row" role="listitem" style="--h: {{ r.hue }}">
+      <a class="g-name" href="#p-{{ r.id }}"><i>{{ r.emoji }}</i><span>{{ r.name }}</span></a>
+      <div class="g-track"><span class="g-bar" style="left: {{ r.left }}%; width: {{ r.width }}%" title="{{ r.name }}: {{ r.commits }} commit{{ '' if r.commits == 1 else 's' }}, first {{ r.first }}, last {{ r.last }}"><b>{% if r.width > 15 %}{{ r.commits }} commits{% endif %}</b></span>{% if r.width <= 15 %}<span class="g-note" style="{{ 'right: ' ~ (100 - r.left) ~ '%; margin-right: 8px; margin-left: 0' if r.left > 80 else 'left: ' ~ (r.left + r.width) ~ '%' }}">{{ r.commits }} commit{{ '' if r.commits == 1 else 's' }}</span>{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="g-foot">Commits are a rough measure, but they are real: {{ tl.commits }} of them, from {{ tl.rows[0].when }} to the latest one.</p>
 </div></section>
 
 <section id="homebase"><div class="wrap"><div class="feature rv">
@@ -350,7 +406,8 @@ addEventListener("keydown", e => {
   else if (e.key === "Enter" && shown[sel]) palGo(shown[sel]);
 });
 </script>
-<script src="/static/tour.js" data-app="showcase" defer></script>
+<script src="/static/tour.js" data-app="showcase" data-auto="0" defer></script>
+<script src="/static/demos.js" defer></script><script src="/static/demos-a.js" defer></script><script src="/static/demos-b.js" defer></script>
 <script src="/static/hub.js" data-app="showcase" defer></script>
 </body>
 </html>

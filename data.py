@@ -292,3 +292,25 @@ FAQ = [
     ("Why does Homebase count screen time?", "So a parent can talk about it with real numbers. It counts playing and watching, never homework, and the minutes are never changed in secret."),
     ("Can I use them on my phone?", "Yes. Everything works in a phone browser, and most can be added to the home screen."),
 ]
+
+
+# A snapshot of every project's real git history, read from the repositories on 2026-10-16:
+# (project id, date of the first commit, date of the last commit, number of commits). Update it when a project moves a lot.
+SNAPSHOT = "2026-10-16"
+TIMELINE = [
+    ("scout", "2026-09-14", "2026-10-10", 22),
+    ("unwritten", "2026-09-19", "2026-10-10", 12),
+    ("crosswind", "2026-09-22", "2026-10-10", 12),
+    ("cookify", "2026-09-24", "2026-10-10", 10),
+    ("platter", "2026-09-25", "2026-10-10", 26),
+    ("alibi", "2026-09-26", "2026-10-10", 30),
+    ("tripmate", "2026-09-27", "2026-10-10", 20),
+    ("control", "2026-10-09", "2026-10-15", 16),
+    ("cramly", "2026-10-09", "2026-10-15", 20),
+    ("homebase", "2026-10-10", "2026-10-15", 31),
+    ("nonsense", "2026-10-13", "2026-10-13", 2),
+    ("womanten", "2026-10-13", "2026-10-13", 8),
+    ("whatif", "2026-10-15", "2026-10-15", 1),
+]
+# Colours for the timeline bars and the designed cards: the project's own hue, except the blue ones (the owner dislikes blue) which get a warm one.
+WARM_HUE = {"homebase": 18, "cramly": 340, "crosswind": 32}

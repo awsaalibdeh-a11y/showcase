@@ -1,0 +1,52 @@
+/* "Try a demo": a window over the page with a small, scripted, playable taste of each app. Matte dark, one warm highlight, no blue. */
+.demo-btn { cursor: pointer; }
+.demo { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, .74); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); animation: dmfade .2s ease; }
+.demo[hidden] { display: none; }
+@keyframes dmfade { from { opacity: 0; } }
+.demo-box { --h: 32; width: min(940px, 100%); max-height: min(780px, 100%); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #2c2c2c; border-radius: 26px;
+  background: radial-gradient(120% 60% at 50% -10%, hsla(var(--h), 40%, 22%, .55), #0e0e0e 60%); box-shadow: 0 40px 120px rgba(0, 0, 0, .75); animation: dmrise .28s cubic-bezier(.2, .7, .2, 1); }
+@keyframes dmrise { from { opacity: 0; transform: translateY(16px) scale(.985); } }
+.demo-head { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.demo-head .tile { width: 46px; height: 46px; font-size: 23px; }
+.demo-head h3 { font-size: 20px; font-weight: 500; letter-spacing: -.03em; line-height: 1.15; }
+.demo-note { color: #9a9a9a; font-size: 12.5px; margin-top: 2px; }
+.demo-x { margin-left: auto; width: 38px; height: 38px; flex: none; border-radius: 50%; border: 1px solid #2f2f2f; background: transparent; color: #ddd; font-size: 20px; line-height: 1; cursor: pointer; }
+.demo-x:hover { background: #1d1d1d; }
+.demo-stage { flex: 1; min-height: 380px; padding: 20px; overflow: auto; }
+.demo-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding: 14px 20px; border-top: 1px solid rgba(255, 255, 255, .07); color: #9a9a9a; font-size: 13px; }
+
+/* building blocks the demos share */
+.dm-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.dm-col { display: grid; gap: 12px; }
+.dm-two { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
+.dm-card { border: 1px solid #272727; border-radius: 18px; background: rgba(255, 255, 255, .03); padding: 14px 16px; }
+.dm-h { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #9a9a9a; margin-bottom: 8px; }
+.dm-muted { color: #9a9a9a; font-size: 13.5px; }
+.dm-chip { padding: 7px 14px; border-radius: 99px; border: 1px solid #333; background: transparent; color: #cfcfcf; font: inherit; font-size: 13.5px; cursor: pointer; transition: all .15s; }
+.dm-chip:hover { border-color: #555; color: #fff; }
+.dm-chip.on { background: #ececf0; color: #0a0a0b; border-color: #ececf0; font-weight: 600; }
+.dm-btn { padding: 10px 18px; border-radius: 99px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ececec; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.dm-btn:hover { background: #242424; } .dm-btn:disabled { opacity: .4; cursor: default; }
+.dm-btn.solid { background: #ececf0; color: #0a0a0b; border-color: #ececf0; }
+.dm-btn.solid:hover { background: #fff; }
+.dm-pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 12px; background: #1c1c1c; border: 1px solid #2c2c2c; color: #bbb; }
+.dm-bar { height: 8px; border-radius: 99px; background: #1f1f1f; overflow: hidden; } .dm-bar > i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, hsl(var(--h), 40%, 55%), hsl(var(--h), 45%, 68%)); transition: width .5s cubic-bezier(.2, .7, .2, 1); }
+.dm-out { min-height: 22px; font-size: 14.5px; line-height: 1.5; color: #d8d8d8; }
+.dm-pop { animation: dmpop .45s cubic-bezier(.2, .7, .2, 1) both; } @keyframes dmpop { from { opacity: 0; transform: translateY(10px); } }
+.dm-range { width: 100%; accent-color: #d8b878; }
+.dm-lab { display: flex; justify-content: space-between; font-size: 13px; color: #bdbdbd; margin: 10px 0 4px; } .dm-lab b { color: #fff; font-weight: 600; font-variant-numeric: tabular-nums; }
+.dm-svg { width: 100%; height: auto; display: block; border-radius: 16px; background: #0b0b0b; border: 1px solid #242424; }
+.dm-ok { color: #8fd7a8; } .dm-bad { color: #f09a8c; } .dm-warm { color: #e2c48f; }
+.dm-toggle { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font: inherit; font-size: 14px; color: inherit; background: transparent; border: 0; padding: 0; user-select: none; }
+.dm-toggle i { width: 42px; height: 24px; border-radius: 99px; background: #2a2a2a; position: relative; transition: background .2s; flex: none; }
+.dm-toggle i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #ddd; transition: transform .2s; }
+.dm-toggle.on i { background: #cdb07a; } .dm-toggle.on i::after { transform: translateX(18px); background: #111; }
+.dm-list { display: grid; gap: 8px; }
+.dm-item { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid #272727; border-radius: 14px; background: rgba(255, 255, 255, .025); cursor: pointer; text-align: left; color: inherit; font: inherit; width: 100%; }
+.dm-item:hover, .dm-item.on { border-color: hsl(var(--h), 35%, 55%); background: hsla(var(--h), 35%, 40%, .12); }
+.dm-flip { perspective: 800px; } .dm-flip > div { position: relative; min-height: 96px; transition: transform .5s; transform-style: preserve-3d; cursor: pointer; }
+.dm-flip.back > div { transform: rotateY(180deg); }
+.dm-flip .f, .dm-flip .b { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-content: center; text-align: center; padding: 10px 14px; border: 1px solid #2c2c2c; border-radius: 16px; background: #131313; font-size: 14px; }
+.dm-flip .b { transform: rotateY(180deg); background: hsla(var(--h), 30%, 22%, .5); }
+@media (max-width: 720px) { .dm-two { grid-template-columns: 1fr; } .demo-stage { padding: 14px; } .demo { padding: 0; } .demo-box { max-height: 100%; height: 100%; border-radius: 0; } }
+@media (prefers-reduced-motion: reduce) { .demo, .demo-box, .dm-pop { animation: none; } .dm-bar > i, .dm-flip > div { transition: none; } }
