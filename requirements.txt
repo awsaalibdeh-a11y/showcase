@@ -1,2 +1,3 @@
 flask
 gunicorn
+segno>=1.6

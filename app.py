@@ -1,13 +1,15 @@
 import datetime
+import io
 import os
 import threading
 import time
 import urllib.request
 
-from flask import Flask, jsonify, render_template, send_from_directory
+from flask import Flask, jsonify, render_template, request, send_from_directory
 
 import data
 
+SITE_URL = os.environ.get("SITE_URL", "https://showcase-hub-pu62.onrender.com")
 app = Flask(__name__)
 import hubguard  # noqa: E402  (the owner's universal switches, kept in Cramly)
 hubguard.install(app, "showcase")
@@ -55,7 +57,7 @@ def home():
             tech.setdefault(t, []).append(p["name"])
     tech = sorted(tech.items(), key=lambda kv: (-len(kv[1]), kv[0]))
     return render_template("index.html", news=data.NEWS, faq=data.FAQ, tech=tech, features=data.HOMEBASE_FEATURES, projects=data.PROJECTS, github=data.GITHUB, homebase_url=data.HOMEBASE_URL, process=data.PROCESS, credits=data.CREDITS,
-                           shots=shots(), tl=build_timeline(), warm=data.WARM_HUE)
+                           shots=shots(), tl=build_timeline(), warm=data.WARM_HUE, noor_features=data.NOOR_FEATURES)
 
 
 @app.get("/reveal")
@@ -102,6 +104,22 @@ def status():
 @app.get("/api/projects")
 def projects():
     return jsonify(projects=data.PROJECTS)
+
+
+@app.get("/qr.svg")
+def qr():
+    """A QR code for the showcase or one of its projects (only those links, so it cannot be used to make codes for anything else)."""
+    import segno
+    pid = request.args.get("id", "")
+    links = {p["id"]: p["url"] for p in data.PROJECTS if p.get("url") and not p.get("private")}
+    url = links.get(pid) or SITE_URL
+    buf = io.BytesIO()
+    segno.make(url, error="h").save(buf, kind="svg", scale=8, border=2, dark="#0a0a0b", light="#ffffff", xmldecl=False, svgns=True)
+    resp = app.response_class(buf.getvalue(), mimetype="image/svg+xml")
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    if request.args.get("download"):
+        resp.headers["Content-Disposition"] = f'attachment; filename="{pid or "showcase"}-qr.svg"'
+    return resp
 
 
 @app.get("/health")

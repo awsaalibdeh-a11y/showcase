@@ -29,6 +29,7 @@ SHOTS = {
     "womanten": ("womanten.jpg", None, "window"),
     "whatif": ("whatif.jpg", None, "window"),
     "nonsense": ("nonsense.jpg", None, "window"),
+    "noor": ("noor.jpg", (330, 0, 1206, 474), "window"),
 }
 URLS = {p["id"]: p["url"].replace("https://", "") for p in data.PROJECTS if p.get("url")}
 HUE = {p["id"]: p["hue"] for p in data.PROJECTS}

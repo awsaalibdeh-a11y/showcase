@@ -7,14 +7,24 @@ HOMEBASE_URL = "https://homebase-family.onrender.com"
 
 PROJECTS = [
     {
-        "id": "homebase", "name": "Homebase", "emoji": "🏠", "hue": 215, "kind": "app",
-        "tag": "Family map, calls and screen time, honest about every bit.",
-        "about": "A family app for Android, Windows and the browser: see where everyone is, message, and make calls that really ring in their own window. "
-                 "Parents see each child's screen time today, can lock a device or ground certain apps (with a minute's warning), and set jobs and points. "
-                 "It is built to never feel controlling: the child sees exactly what the family sees, can pause sharing, and every lock or grounding is announced in the family chat.",
-        "stack": ["Kotlin", "Jetpack Compose", "C# Windows tracker", "WebRTC", "Flask"],
+        "id": "homebase", "name": "Mellow", "emoji": "🏡", "hue": 215, "kind": "app",
+        "tag": "The family app: map, video calls, safety and screen time, honest about every bit.",
+        "about": "Mellow (it started as Homebase) is a family app for Android, Windows and the browser: see where everyone is, message with photos and voice notes, and make video calls that really ring. "
+                 "It has SOS, Safe Walk, safety alerts, meals, plans, pocket money and homework, and it links to Noor so the family reads the Quran together. "
+                 "Parents can see screen time and set limits, but it never feels controlling: everyone sees exactly what is shared, can pause it, and every lock is announced in the family chat.",
+        "stack": ["Kotlin", "Jetpack Compose", "C# Windows tracker", "WebRTC", "Flask", "Postgres"],
         "url": HOMEBASE_URL, "repo": "homebase",
         "steps": ["Open it in the browser, or install the Android app", "Create a family, or join with a code", "Share the map, call, and see screen time"],
+    },
+    {
+        "id": "noor", "name": "Noor", "emoji": "🌙", "hue": 150, "kind": "app",
+        "tag": "A complete Quran app: read, listen, recite and get checked, even offline.",
+        "about": "All 114 surahs with translation in 21 languages, tafsir, tajweed colours and word-by-word meanings, and 20 reciters you can save for offline listening. "
+                 "Recite out loud and Noor marks every mistake, or hide the text for tasmi' and get a score. Sheikh Aws, an AI helper, answers questions about prayer, fasting and duas, "
+                 "and families on Mellow see what everyone read while parents give reading and memorizing tasks. Prayer times, Qibla, Ramadan mode, adhkar and a Quran platform game too.",
+        "stack": ["Flask", "JavaScript PWA", "Web Speech", "Service Worker", "Android app", "Canvas game"],
+        "url": "https://noor-quran-xuzt.onrender.com", "repo": "quran",
+        "steps": ["Open it on your phone and pick a surah, or tap Listen for Maher Al-Muaiqly", "Tap Recite to read aloud and get checked, or ask Sheikh Aws a question", "Link Mellow so your family sees your streak and can give you tasks"],
     },
     {
         "id": "scout", "name": "Scout", "emoji": "🧭", "hue": 160, "kind": "ai",
@@ -128,7 +138,9 @@ PROJECTS = [
 
 HOMEBASE_FEATURES = [
     ("📍", "Shared map", "Everyone who is sharing shows up, parents too. Offline? You still see the last place."),
-    ("📞", "Calls that ring", "A real ringing window on Windows and full-screen calls on phones, not a quiet notification."),
+    ("📹", "Video calls that ring", "Voice and video calls on phones and laptops, with a real ringing window, not a quiet notification."),
+    ("🆘", "SOS and Safe Walk", "Hold for SOS and everyone gets your live location. Safe Walk tells the family if you do not arrive."),
+    ("📖", "Quran with Noor", "See what everyone read in Noor, and give reading and memorizing tasks."),
     ("⏱️", "Honest screen time", "Counts playing and watching per app, never homework. The child sees exactly what parents see."),
     ("🔒", "Locks, 4 hours a day max", "A parent can lock a device; the family chat announces it and the child can ask to be unlocked."),
     ("🚫", "Ground certain apps", "Pick real apps from the child's computer, get a one-minute warning, and only that app closes."),
@@ -136,6 +148,18 @@ HOMEBASE_FEATURES = [
     ("✅", "Jobs and points", "Parents set jobs, children tick them off, parents approve them for points."),
     ("🙋", "Ask, don't track", "\"Where are you?\" is a request the child can answer or say not now to."),
     ("🏡", "Home area", "Know when someone gets home, using a place the family sets together."),
+]
+
+NOOR_FEATURES = [
+    ("🎙", "Recite and get checked", "Read aloud and every word turns green or red. Tasmi' hides the text and scores you at the end."),
+    ("🎧", "20 reciters, offline", "Maher Al-Muaiqly by default. Download any surah and listen with no internet, with a sleep timer and a memorization loop."),
+    ("🎨", "Tajweed and word by word", "Colour-coded tajweed rules, and tap any word for its meaning and its sound."),
+    ("🌍", "21 languages", "Saheeh International English built in, plus Urdu, French, Turkish, Indonesian, Spanish and more."),
+    ("شيخ", "Sheikh Aws", "An AI helper for prayer, fasting and duas. Quran verses are shown from the real text, never from memory."),
+    ("🕌", "Prayer times and Qibla", "Calculated on the phone, so they work offline. A compass points to Makkah."),
+    ("🌙", "Ramadan mode", "Suhoor and iftar countdown, a juz a day, fasting and taraweeh trackers, and the duas."),
+    ("👪", "Read as a family", "Linked to Mellow: see who read what, and parents give reading and memorizing tasks."),
+    ("🎮", "Noor Quest", "A Mario-style platform game where every ؟ block asks a question about the Quran."),
 ]
 
 HOMEBASE_STEPS = [
@@ -150,11 +174,19 @@ HOMEBASE_STEPS = [
 MADE = {
     "homebase": {
         "steps": [
-            "I wanted a family app that never feels controlling",
+            "I wanted a family app that never feels controlling, then renamed it Mellow with a calmer look",
             "I set the rules: consent first, honest screen time, nothing secret. Claude helped write the Android app, the Windows tracker and the server",
             "We tested on my real laptop and tablet, fixed what broke (grounding, ringing, two tabs), and I shipped it"
         ],
         "ai": ""
+    },
+    "noor": {
+        "steps": [
+            "I asked for a Quran reader, then said: make it an app, white and green, that works without internet",
+            "I kept asking for the big features: Maher, recite and get corrected, tasmi' with a score, Ramadan mode, a Mario-style game, Sheikh Aws and family tasks in Mellow. Claude helped build them; the OpenAI API powers Sheikh Aws and the listening in the app",
+            "I tested it, asked for clearer text and a better design, added my key, and put it online"
+        ],
+        "ai": "OpenAI API"
     },
     "scout": {
         "steps": [
@@ -271,12 +303,17 @@ CREDITS = [
     ("Me", "Every idea, design decision, test and \"make it better\". I made these.", "primary"),
     ("Claude", "Anthropic's AI, helped me write and test the code and get it online.", "helper"),
     ("ChatGPT Agent Builder", "Where I first built the Tripmate agent and learned how agents work.", "tool"),
-    ("OpenAI API", "Powers the AI inside Scout, Unwritten, Cookify, Platter, Alibi, Tripmate, Cramly, Womanten and Whatif.", "tool"),
+    ("OpenAI API", "Powers the AI inside Noor, Scout, Unwritten, Cookify, Platter, Alibi, Tripmate, Cramly, Womanten and Whatif.", "tool"),
 ]
 
 
 # Real milestones, newest first. Only things that actually shipped.
 NEWS = [
+    ("Noor", "Families on Mellow read together: everyone's streak and last ayah, and parents give reading and memorizing tasks."),
+    ("Noor", "Sheikh Aws, an AI helper for prayer, fasting and duas, with every Quran verse shown from the real text."),
+    ("Noor", "Recite and get checked, tasmi' with a score, Maher and 19 more reciters, tajweed colours and 21 languages."),
+    ("Noor", "Noor Quest, a jump-and-run game where every ؟ block is a Quran question."),
+    ("Mellow", "Homebase is now Mellow: video calls, SOS, Safe Walk, safety alerts, meals and a calmer look."),
     ("Homebase", "Two tabs everywhere, a ringing call window on Windows, and a built-in update guide for the old app."),
     ("Homebase", "Parents see each child's screen time today on the Family tab, on the web and on Android."),
     ("Homebase", "Grounding fixed so only the grounded app closes. The tracker now updates itself."),
@@ -288,7 +325,9 @@ NEWS = [
 FAQ = [
     ("Are these real?", "Yes. Every card links to a live site you can open now. Free-tier sites sleep when nobody visits, so the first load can take up to 30 seconds. The Wake all sites button warms them up."),
     ("Who made them?", "I did: the ideas, the choices and the testing. Claude helped me write and test the code, and some projects use the OpenAI API for their AI."),
-    ("Is Homebase spying on kids?", "No. The child sees exactly what the family sees, can pause sharing, and every lock or grounding is announced in the family chat. It never hides itself."),
+    ("What is Noor?", "A Quran app for the whole family: read, listen, recite and get checked, with tafsir, prayer times and Ramadan mode. Almost everything works without internet."),
+    ("Is Sheikh Aws a real sheikh?", "No. Sheikh Aws is an AI helper inside Noor. It cites the Quran and hadith, says where scholars differ, and tells you to ask a qualified scholar for serious personal questions."),
+    ("Is Mellow (Homebase) spying on kids?", "No. The child sees exactly what the family sees, can pause sharing, and every lock or grounding is announced in the family chat. It never hides itself."),
     ("Why does Homebase count screen time?", "So a parent can talk about it with real numbers. It counts playing and watching, never homework, and the minutes are never changed in secret."),
     ("Can I use them on my phone?", "Yes. Everything works in a phone browser, and most can be added to the home screen."),
 ]
@@ -296,21 +335,22 @@ FAQ = [
 
 # A snapshot of every project's real git history, read from the repositories on 2026-10-16:
 # (project id, date of the first commit, date of the last commit, number of commits). Update it when a project moves a lot.
-SNAPSHOT = "2026-10-16"
+SNAPSHOT = "2026-10-21"
 TIMELINE = [
-    ("scout", "2026-09-14", "2026-10-10", 22),
+    ("scout", "2026-09-14", "2026-10-16", 25),
     ("unwritten", "2026-09-19", "2026-10-10", 12),
     ("crosswind", "2026-09-22", "2026-10-10", 12),
     ("cookify", "2026-09-24", "2026-10-10", 10),
-    ("platter", "2026-09-25", "2026-10-10", 26),
-    ("alibi", "2026-09-26", "2026-10-10", 30),
+    ("platter", "2026-09-25", "2026-10-16", 29),
+    ("alibi", "2026-09-26", "2026-10-16", 32),
     ("tripmate", "2026-09-27", "2026-10-10", 20),
     ("control", "2026-10-09", "2026-10-15", 16),
     ("cramly", "2026-10-09", "2026-10-15", 20),
-    ("homebase", "2026-10-10", "2026-10-15", 31),
+    ("homebase", "2026-10-10", "2026-10-18", 52),
     ("nonsense", "2026-10-13", "2026-10-13", 2),
     ("womanten", "2026-10-13", "2026-10-13", 8),
     ("whatif", "2026-10-15", "2026-10-15", 1),
+    ("noor", "2026-10-18", "2026-10-21", 11),
 ]
 # Colours for the timeline bars and the designed cards: the project's own hue, except the blue ones (the owner dislikes blue) which get a warm one.
 WARM_HUE = {"homebase": 18, "cramly": 340, "crosswind": 32}

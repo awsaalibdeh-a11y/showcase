@@ -168,13 +168,19 @@ section[id] { scroll-margin-top: 64px; }
 .g-foot { color: var(--muted); font-size: 13px; margin-top: 14px; }
 @media (max-width: 700px) { .g-axis, .g-row { grid-template-columns: 1fr; gap: 2px; } .g-axis .g-lab { display: none; } .g-row { padding: 6px 0 2px; } .g-track { height: 30px; } .g-bar { top: 4px; } .g-note { top: 7px; } .gantt { padding: 18px 16px 10px; } }
 @media (prefers-reduced-motion: reduce) { .js .gantt.rv .g-bar { transform: none; transition: none; } .shot img { transition: none; } }
+
+.qrbox { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; margin-top: 24px; padding: 24px; border: 1px solid var(--line); border-radius: 24px; background: #0e0e10; }
+.qrimg { background: #fff; border-radius: 20px; padding: 14px; line-height: 0; }
+.qrimg img { width: 240px; height: 240px; image-rendering: pixelated; }
+.qrside { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 220px; }
+.qrurl { color: var(--muted, #9a9aa3); font-size: 15px; word-break: break-all; }
 </style>
 <link rel="stylesheet" href="/static/demos.css">
 </head>
 <body>
 <div id="bar"></div><button class="totop" id="top" aria-label="Back to top">&#8593;</button>
 <a class="skip" href="#projects">Skip to the projects</a>
-<nav><div class="wrap"><b>Everything I've built</b><div><button class="btn sm kbtn" id="palbtn" style="margin:0 6px 0 0;padding:6px 12px">Jump <kbd>Ctrl K</kbd></button><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#timeline">Timeline</a><a href="#homebase">Homebase</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
+<nav><div class="wrap"><b>Everything I've built</b><div><button class="btn sm kbtn" id="palbtn" style="margin:0 6px 0 0;padding:6px 12px">Jump <kbd>Ctrl K</kbd></button><a href="#reveal">Reveal</a><a href="#projects">Projects</a><a href="#timeline">Timeline</a><a href="#homebase">Mellow</a><a href="#noor">Noor</a><a href="#qr">QR</a><a href="#news">News</a><a href="#tech">Tech</a><a href="#faq">FAQ</a><a href="#credits">Credits</a></div></div></nav>
 
 <header class="hero"><div class="orb a"></div><div class="orb b"></div><div class="wrap">
   <div class="kick">The collection</div>
@@ -214,7 +220,7 @@ section[id] { scroll-margin-top: 64px; }
   <div class="grid" id="grid">
   {% for p in projects %}
     <article class="card rv" style="--h: {{ warm.get(p.id, p.hue) }}" id="p-{{ p.id }}" data-id="{{ p.id }}" data-n="{{ p.name|lower }}" data-k="{{ p.kind }}" data-t="{{ (p.name ~ " " ~ p.tag ~ " " ~ p.about ~ " " ~ p.stack|join(" "))|lower|e }}">
-      {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% endif %}
+      {% if p.private %}<span class="badge">owner only</span>{% elif p.id == "homebase" %}<span class="badge">Android · Windows · Web</span>{% elif p.id == "noor" %}<span class="badge">Android · Web · Offline</span>{% endif %}
       {% if p.id in shots %}<a class="shot" href="{{ p.url }}" target="_blank" rel="noopener" tabindex="-1" aria-label="Open {{ p.name }}"><img src="/static/shots/{{ p.id }}.jpg" width="960" height="520" loading="lazy" decoding="async" alt="A look at {{ p.name }}"></a>
       {% elif not p.private %}<div class="shot art" style="--h: {{ warm.get(p.id, p.hue) }}" aria-hidden="true"><span class="art-emoji">{{ p.emoji }}</span><span class="art-name">{{ p.name }}</span><span class="art-tag">{{ p.tag }}</span></div>{% endif %}
       <div class="top"><div class="tile">{{ p.emoji }}</div><div><h3>{{ p.name }}</h3><div class="tag">{{ p.tag }}</div>{% if p.url and not p.private %}<div class="live" data-live="{{ p.id }}"><i class="dot"></i><span>checking…</span></div>{% endif %}</div></div>
@@ -225,9 +231,10 @@ section[id] { scroll-margin-top: 64px; }
       <div class="links">
         {% if not p.private %}<button class="btn solid demo-btn" type="button" data-demo="{{ p.id }}">&#9654; Try a demo</button>{% endif %}
         {% if p.id == "homebase" and not p.url %}<a class="btn solid" href="#homebase">See the setup</a>
-        {% elif p.url %}<a class="btn open" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id == "homebase" else "Open the site") }} &#8599;</a>{% endif %}
+        {% elif p.url %}<a class="btn open" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id in ("homebase", "noor") else "Open the site") }} &#8599;</a>{% endif %}
         <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
         <button class="btn sm" data-copy="{{ p.id }}" title="Copy a link to this project">&#128279; Copy link</button>
+        {% if p.url and not p.private %}<button class="btn sm" data-qr="{{ p.id }}" title="Show a QR code to open it on a phone">&#9638; QR</button>{% endif %}
       </div>
     </article>
   {% endfor %}
@@ -251,7 +258,7 @@ section[id] { scroll-margin-top: 64px; }
 
 <section id="homebase"><div class="wrap"><div class="feature rv">
   <div class="kick" style="margin-bottom:12px">Featured · Android, Windows and web</div>
-  <h2>Homebase: <span class="silver">stay close,<br>stay yourself.</span></h2>
+  <h2>Mellow: <span class="silver">stay close,<br>stay yourself.</span></h2>
   <p class="sub">A family app that shows where everyone is, lets you message, and makes calls that ring in their own window. Parents see each child's screen time today and can help with limits. Nobody should feel watched: the person being located always sees exactly what is shared, can pause it, and chooses what parents can do.</p>
   <div class="promise">
     <div><b>What the family sees</b>Where you are while sharing is on, your battery, your screen time today (minutes playing or watching, never homework), and the messages you send.</div>
@@ -266,6 +273,30 @@ section[id] { scroll-margin-top: 64px; }
     <a class="btn" href="{{ github }}homebase" target="_blank" rel="noopener">Read the code</a>
   </div>
 </div></div></section>
+
+<section id="noor"><div class="wrap"><div class="feature rv" style="--h: 150">
+  <div class="kick" style="margin-bottom:12px">Featured · Android, web and offline</div>
+  <h2>Noor: <span class="silver">the Quran,<br>for the whole family.</span></h2>
+  <p class="sub">Read, listen and recite with a clear Quran font, Maher Al-Muaiqly and 19 more reciters. Noor listens while you recite and marks every mistake, hides the text for tasmi' and scores you, and remembers your streak. Almost everything works without internet.</p>
+  <div class="fgrid">{% for e, t, d in noor_features %}<div><i>{{ e }}</i><b>{{ t }}</b><span>{{ d }}</span></div>{% endfor %}</div>
+  <div class="cta" style="justify-content:flex-start;margin-top:24px">
+    <a class="btn solid" href="https://noor-quran-xuzt.onrender.com" target="_blank" rel="noopener">Open Noor &#8599;</a><a class="btn" href="https://noor-quran-xuzt.onrender.com/noor.apk">Get the Android app</a>
+    <button class="btn" type="button" data-demo="noor">&#9654; Try a demo</button><a class="btn" href="{{ github }}quran" target="_blank" rel="noopener">Read the code</a>
+  </div>
+</div></div></section>
+
+<section id="qr"><div class="wrap">
+  <h2>Take it <span class="silver">with you</span></h2>
+  <p class="sub">Point a phone camera at the code to open it there. Pick a project to get its own code, or save the poster.</p>
+  <div class="qrbox rv">
+    <div class="qrimg"><img id="qrimg" src="/qr.svg" width="280" height="280" alt="QR code for this showcase"></div>
+    <div class="qrside">
+      <select class="sortsel" id="qrsel" aria-label="Which link the QR code opens"><option value="">This showcase</option>{% for p in projects if p.url and not p.private %}<option value="{{ p.id }}">{{ p.emoji }} {{ p.name }}</option>{% endfor %}</select>
+      <div class="qrurl" id="qrurl">showcase-hub-pu62.onrender.com</div>
+      <div class="cta" style="justify-content:flex-start"><a class="btn solid" id="qrdl" href="/qr.svg?download=1" download>Save the code</a><a class="btn" href="/static/showcase-qr.png" download>Save the poster</a></div>
+    </div>
+  </div>
+</div></section>
 
 <section id="news"><div class="wrap">
   <h2>What's <span class="silver">new</span></h2>
@@ -382,7 +413,7 @@ if (!calm && matchMedia("(hover: hover)").matches) {
 /* command palette: Ctrl or Cmd + K */
 const pal = document.getElementById("pal"), palq = document.getElementById("palq"), pall = document.getElementById("pall");
 const ITEMS = [...document.querySelectorAll("#grid .card")].map(c => ({ id: c.dataset.id, name: c.querySelector("h3").textContent, em: c.querySelector(".tile").textContent, tag: c.querySelector(".tag").textContent, link: (c.querySelector(".links a.solid") || {}).href }))
-  .concat([["#reveal", "Watch the reveal", "▶"], ["#homebase", "Homebase features", "🏠"], ["#news", "What's new", "📰"], ["#tech", "What I used", "🛠️"], ["#faq", "Common questions", "❓"], ["#credits", "Credits", "⭐"]].map(([h, n, e]) => ({ name: n, em: e, tag: "section", hash: h })));
+  .concat([["#reveal", "Watch the reveal", "▶"], ["#homebase", "Mellow features", "🏡"], ["#noor", "Noor features", "🌙"], ["#qr", "QR codes", "▦"], ["#news", "What's new", "📰"], ["#tech", "What I used", "🛠️"], ["#faq", "Common questions", "❓"], ["#credits", "Credits", "⭐"]].map(([h, n, e]) => ({ name: n, em: e, tag: "section", hash: h })));
 let sel = 0, shown = [];
 function palRender() {
   const w = palq.value.trim().toLowerCase();
@@ -407,7 +438,16 @@ addEventListener("keydown", e => {
 });
 </script>
 <script src="/static/tour.js" data-app="showcase" data-auto="0" defer></script>
-<script src="/static/demos.js" defer></script><script src="/static/demos-a.js" defer></script><script src="/static/demos-b.js" defer></script>
+<script src="/static/demos.js" defer></script><script src="/static/demos-a.js" defer></script><script src="/static/demos-b.js" defer></script><script src="/static/demos-c.js" defer></script>
+<script>
+(() => {
+  const URLS = { "": "https://showcase-hub-pu62.onrender.com"{% for p in projects if p.url and not p.private %}, "{{ p.id }}": "{{ p.url }}"{% endfor %} };
+  const sel = document.getElementById("qrsel"), img = document.getElementById("qrimg"), dl = document.getElementById("qrdl"), lab = document.getElementById("qrurl");
+  const set = id => { sel.value = id; img.src = "/qr.svg" + (id ? "?id=" + id : ""); dl.href = "/qr.svg?download=1" + (id ? "&id=" + id : ""); lab.textContent = (URLS[id] || URLS[""]).replace("https://", ""); };
+  sel.addEventListener("change", () => set(sel.value));
+  document.addEventListener("click", e => { const b = e.target.closest("[data-qr]"); if (!b) return; set(b.dataset.qr); document.getElementById("qr").scrollIntoView({ behavior: "smooth" }); });
+})();
+</script>
 <script src="/static/hub.js" data-app="showcase" defer></script>
 </body>
 </html>
