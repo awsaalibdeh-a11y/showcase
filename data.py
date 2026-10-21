@@ -13,7 +13,7 @@ PROJECTS = [
                  "It has SOS, Safe Walk, safety alerts, meals, plans, pocket money and homework, and it links to Noor so the family reads the Quran together. "
                  "Parents can see screen time and set limits, but it never feels controlling: everyone sees exactly what is shared, can pause it, and every lock is announced in the family chat.",
         "stack": ["Kotlin", "Jetpack Compose", "C# Windows tracker", "WebRTC", "Flask", "Postgres"],
-        "url": HOMEBASE_URL, "repo": "homebase",
+        "url": HOMEBASE_URL, "repo": "homebase", "apk": HOMEBASE_URL + "/download",
         "steps": ["Open it in the browser, or install the Android app", "Create a family, or join with a code", "Share the map, call, and see screen time"],
     },
     {
@@ -23,7 +23,7 @@ PROJECTS = [
                  "Recite out loud and Noor marks every mistake, or hide the text for tasmi' and get a score. Sheikh Aws, an AI helper, answers questions about prayer, fasting and duas, "
                  "and families on Mellow see what everyone read while parents give reading and memorizing tasks. Prayer times, Qibla, Ramadan mode, adhkar and a Quran platform game too.",
         "stack": ["Flask", "JavaScript PWA", "Web Speech", "Service Worker", "Android app", "Canvas game"],
-        "url": "https://noor-quran-xuzt.onrender.com", "repo": "quran",
+        "url": "https://noor-quran-xuzt.onrender.com", "repo": "quran", "apk": "https://noor-quran-xuzt.onrender.com/noor.apk",
         "steps": ["Open it on your phone and pick a surah, or tap Listen for Maher Al-Muaiqly", "Tap Recite to read aloud and get checked, or ask Sheikh Aws a question", "Link Mellow so your family sees your streak and can give you tasks"],
     },
     {
@@ -32,7 +32,7 @@ PROJECTS = [
         "about": "A local-search map with an AI concierge. Ask for what you want in plain words and it finds real places near you, "
                  "using a local index of 103,000 Saudi places so answers come back in about a second.",
         "stack": ["Flask", "Leaflet", "Overture Maps", "OpenAI"],
-        "url": "https://scout-15t6.onrender.com", "repo": "scout",
+        "url": "https://scout-15t6.onrender.com", "repo": "scout", "apk": "https://scout-15t6.onrender.com/static/scout.apk",
         "steps": ["Type what you want, like a quiet cafe with wifi", "The concierge searches real places near you", "Tap a pin for hours and directions"],
     },
     {
@@ -68,7 +68,7 @@ PROJECTS = [
         "about": "A three-pane recipe box in the style of Plate It. Diet filters, an AI helper, price estimates, "
                  "a weekly planner, pantry, and it works offline.",
         "stack": ["Flask", "Vanilla JS", "Service worker"],
-        "url": "https://platter-87b0.onrender.com", "repo": "platter",
+        "url": "https://platter-87b0.onrender.com", "repo": "platter", "apk": "https://platter-87b0.onrender.com/static/platter.apk",
         "steps": ["Browse more than a thousand recipes", "Filter by diet, or ask the AI helper", "Plan the week and get a shopping list"],
     },
     {
@@ -77,7 +77,7 @@ PROJECTS = [
         "about": "A multiplayer party game. The AI writes a fresh case, one player is secretly the killer, "
                  "and everyone plays on their own phone: question suspects, search rooms, and solve it before time runs out.",
         "stack": ["Flask", "Polling", "OpenAI"],
-        "url": "https://alibi-d9tn.onrender.com", "repo": "alibi",
+        "url": "https://alibi-d9tn.onrender.com", "repo": "alibi", "apk": "https://alibi-d9tn.onrender.com/static/alibi.apk",
         "steps": ["Make a room and share the code", "Roles are handed out in secret", "Question, search and name the killer"],
     },
     {

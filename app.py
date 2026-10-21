@@ -112,6 +112,7 @@ def qr():
     import segno
     pid = request.args.get("id", "")
     links = {p["id"]: p["url"] for p in data.PROJECTS if p.get("url") and not p.get("private")}
+    links.update({p["id"] + "-app": p["apk"] for p in data.PROJECTS if p.get("apk")})
     url = links.get(pid) or SITE_URL
     buf = io.BytesIO()
     segno.make(url, error="h").save(buf, kind="svg", scale=8, border=2, dark="#0a0a0b", light="#ffffff", xmldecl=False, svgns=True)

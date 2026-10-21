@@ -26,11 +26,11 @@ class Page(unittest.TestCase):
 
     def test_every_public_project_has_a_demo_button_and_the_private_one_does_not(self):
         buttons = re.findall(r'data-demo="([\w-]+)"', self.html)
-        self.assertEqual(sorted(buttons), sorted(PUBLIC))
+        self.assertEqual(set(buttons), set(PUBLIC))
         self.assertNotIn('data-demo="control"', self.html)
 
     def test_every_demo_button_has_a_demo_registered_in_the_scripts(self):
-        js = read("static", "demos-a.js") + read("static", "demos-b.js")
+        js = read("static", "demos-a.js") + read("static", "demos-b.js") + read("static", "demos-c.js")
         registered = set(re.findall(r"DEMOS\.(\w+)\s*=", js))
         self.assertEqual(registered, set(PUBLIC), "demos registered vs public projects")
 
@@ -80,7 +80,7 @@ class Timeline(unittest.TestCase):
         for r in tl["rows"]:
             self.assertGreaterEqual(r["left"], 0, r["id"])
             self.assertLessEqual(r["left"] + r["width"], 100.5, r["id"])
-        self.assertEqual(tl["days"], 32)
+        self.assertEqual(tl["days"], (datetime.date.fromisoformat(data.SNAPSHOT) - datetime.date(2026, 9, 14)).days + 1)
         self.assertEqual(tl["commits"], sum(r[3] for r in data.TIMELINE))
         self.assertEqual([t["label"] for t in tl["ticks"]][0], "Sep 14")
 

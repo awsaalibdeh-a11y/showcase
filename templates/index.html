@@ -234,6 +234,7 @@ section[id] { scroll-margin-top: 64px; }
         {% elif p.url %}<a class="btn open" href="{{ p.url }}" target="_blank" rel="noopener">{{ "Open the panel" if p.private else ("Open the app" if p.id in ("homebase", "noor") else "Open the site") }} &#8599;</a>{% endif %}
         <a class="btn" href="{{ github }}{{ p.repo }}" target="_blank" rel="noopener">Code</a>
         <button class="btn sm" data-copy="{{ p.id }}" title="Copy a link to this project">&#128279; Copy link</button>
+        {% if p.apk %}<a class="btn" href="{{ p.apk }}" title="Download the Android app (APK)">&#11015; Android app</a>{% endif %}
         {% if p.url and not p.private %}<button class="btn sm" data-qr="{{ p.id }}" title="Show a QR code to open it on a phone">&#9638; QR</button>{% endif %}
       </div>
     </article>
@@ -291,7 +292,7 @@ section[id] { scroll-margin-top: 64px; }
   <div class="qrbox rv">
     <div class="qrimg"><img id="qrimg" src="/qr.svg" width="280" height="280" alt="QR code for this showcase"></div>
     <div class="qrside">
-      <select class="sortsel" id="qrsel" aria-label="Which link the QR code opens"><option value="">This showcase</option>{% for p in projects if p.url and not p.private %}<option value="{{ p.id }}">{{ p.emoji }} {{ p.name }}</option>{% endfor %}</select>
+      <select class="sortsel" id="qrsel" aria-label="Which link the QR code opens"><option value="">This showcase</option>{% for p in projects if p.url and not p.private %}<option value="{{ p.id }}">{{ p.emoji }} {{ p.name }} (website)</option>{% if p.apk %}<option value="{{ p.id }}-app">{{ p.emoji }} {{ p.name }} (Android app)</option>{% endif %}{% endfor %}</select>
       <div class="qrurl" id="qrurl">showcase-hub-pu62.onrender.com</div>
       <div class="cta" style="justify-content:flex-start"><a class="btn solid" id="qrdl" href="/qr.svg?download=1" download>Save the code</a><a class="btn" href="/static/showcase-qr.png" download>Save the poster</a></div>
     </div>
@@ -441,7 +442,7 @@ addEventListener("keydown", e => {
 <script src="/static/demos.js" defer></script><script src="/static/demos-a.js" defer></script><script src="/static/demos-b.js" defer></script><script src="/static/demos-c.js" defer></script>
 <script>
 (() => {
-  const URLS = { "": "https://showcase-hub-pu62.onrender.com"{% for p in projects if p.url and not p.private %}, "{{ p.id }}": "{{ p.url }}"{% endfor %} };
+  const URLS = { "": "https://showcase-hub-pu62.onrender.com"{% for p in projects if p.url and not p.private %}, "{{ p.id }}": "{{ p.url }}"{% if p.apk %}, "{{ p.id }}-app": "{{ p.apk }}"{% endif %}{% endfor %} };
   const sel = document.getElementById("qrsel"), img = document.getElementById("qrimg"), dl = document.getElementById("qrdl"), lab = document.getElementById("qrurl");
   const set = id => { sel.value = id; img.src = "/qr.svg" + (id ? "?id=" + id : ""); dl.href = "/qr.svg?download=1" + (id ? "&id=" + id : ""); lab.textContent = (URLS[id] || URLS[""]).replace("https://", ""); };
   sel.addEventListener("change", () => set(sel.value));
