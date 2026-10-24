@@ -11,6 +11,8 @@ import data
 
 SITE_URL = os.environ.get("SITE_URL", "https://showcase-hub-pu62.onrender.com")
 app = Flask(__name__)
+from flask_compress import Compress  # noqa: E402  (gzip pages, JSON and scripts: Render's free plan counts bandwidth)
+Compress(app)
 import hubguard  # noqa: E402  (the owner's universal switches, kept in Cramly)
 hubguard.install(app, "showcase")
 
