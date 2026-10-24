@@ -9,7 +9,7 @@ from flask import Flask, jsonify, render_template, request, send_from_directory
 
 import data
 
-SITE_URL = os.environ.get("SITE_URL", "https://showcase-hub-pu62.onrender.com")
+SITE_URL = os.environ.get("SITE_URL", "https://death242-showcase.static.hf.space")
 app = Flask(__name__)
 from flask_compress import Compress  # noqa: E402  (gzip pages, JSON and scripts: Render's free plan counts bandwidth)
 Compress(app)

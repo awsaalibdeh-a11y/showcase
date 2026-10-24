@@ -281,7 +281,7 @@ section[id] { scroll-margin-top: 64px; }
   <p class="sub">Read, listen and recite with a clear Quran font, Maher Al-Muaiqly and 19 more reciters. Noor listens while you recite and marks every mistake, hides the text for tasmi' and scores you, and remembers your streak. Almost everything works without internet.</p>
   <div class="fgrid">{% for e, t, d in noor_features %}<div><i>{{ e }}</i><b>{{ t }}</b><span>{{ d }}</span></div>{% endfor %}</div>
   <div class="cta" style="justify-content:flex-start;margin-top:24px">
-    <a class="btn solid" href="https://noor-quran-xuzt.onrender.com" target="_blank" rel="noopener">Open Noor &#8599;</a><a class="btn" href="https://noor-quran-xuzt.onrender.com/noor.apk">Get the Android app</a>
+    <a class="btn solid" href="https://death242-noor.static.hf.space" target="_blank" rel="noopener">Open Noor &#8599;</a><a class="btn" href="https://huggingface.co/datasets/Death242/downloads/resolve/main/noor.apk">Get the Android app</a>
     <button class="btn" type="button" data-demo="noor">&#9654; Try a demo</button><a class="btn" href="{{ github }}quran" target="_blank" rel="noopener">Read the code</a>
   </div>
 </div></div></section>
@@ -293,7 +293,7 @@ section[id] { scroll-margin-top: 64px; }
     <div class="qrimg"><img id="qrimg" src="/qr.svg" width="280" height="280" alt="QR code for this showcase"></div>
     <div class="qrside">
       <select class="sortsel" id="qrsel" aria-label="Which link the QR code opens"><option value="">This showcase</option>{% for p in projects if p.url and not p.private %}<option value="{{ p.id }}">{{ p.emoji }} {{ p.name }} (website)</option>{% if p.apk %}<option value="{{ p.id }}-app">{{ p.emoji }} {{ p.name }} (Android app)</option>{% endif %}{% endfor %}</select>
-      <div class="qrurl" id="qrurl">showcase-hub-pu62.onrender.com</div>
+      <div class="qrurl" id="qrurl">death242-showcase.static.hf.space</div>
       <div class="cta" style="justify-content:flex-start"><a class="btn solid" id="qrdl" href="/qr.svg?download=1" download>Save the code</a><a class="btn" href="/static/showcase-qr.png" download>Save the poster</a></div>
     </div>
   </div>
@@ -442,7 +442,7 @@ addEventListener("keydown", e => {
 <script src="/static/demos.js" defer></script><script src="/static/demos-a.js" defer></script><script src="/static/demos-b.js" defer></script><script src="/static/demos-c.js" defer></script>
 <script>
 (() => {
-  const URLS = { "": "https://showcase-hub-pu62.onrender.com"{% for p in projects if p.url and not p.private %}, "{{ p.id }}": "{{ p.url }}"{% if p.apk %}, "{{ p.id }}-app": "{{ p.apk }}"{% endif %}{% endfor %} };
+  const URLS = { "": "https://death242-showcase.static.hf.space"{% for p in projects if p.url and not p.private %}, "{{ p.id }}": "{{ p.url }}"{% if p.apk %}, "{{ p.id }}-app": "{{ p.apk }}"{% endif %}{% endfor %} };
   const sel = document.getElementById("qrsel"), img = document.getElementById("qrimg"), dl = document.getElementById("qrdl"), lab = document.getElementById("qrurl");
   const set = id => { sel.value = id; img.src = "/qr.svg" + (id ? "?id=" + id : ""); dl.href = "/qr.svg?download=1" + (id ? "&id=" + id : ""); lab.textContent = (URLS[id] || URLS[""]).replace("https://", ""); };
   sel.addEventListener("change", () => set(sel.value));

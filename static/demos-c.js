@@ -46,4 +46,15 @@
     }
     show("quiz");
   };
+
+  DEMOS.void = ctx => {
+    const paints = [["Void Black", "#0a0a0c"], ["Blood Red", "#8b0e18"], ["Ghost White", "#e9e9ea"], ["Ion Blue", "#123a8c"], ["Ember Orange", "#c9480c"]];
+    const car = h("div", { style: "height:120px;display:grid;place-items:center" });
+    const draw = c => { car.innerHTML = `<svg viewBox="0 0 320 110" width="100%" height="110"><path d="M20 78 Q30 52 80 48 L130 30 Q170 20 210 34 L262 48 Q300 54 304 76 L304 84 L20 84 Z" fill="${c}" stroke="#c1121f" stroke-width="2"/><path d="M135 34 L205 38 L232 50 L120 50 Z" fill="#0b0e14" opacity=".85"/><circle cx="82" cy="84" r="17" fill="#111"/><circle cx="82" cy="84" r="8" fill="#c1121f"/><circle cx="246" cy="84" r="17" fill="#111"/><circle cx="246" cy="84" r="8" fill="#c1121f"/><rect x="292" y="62" width="10" height="4" fill="#e8fbff"/></svg>`; };
+    const row = h("div.dm-row");
+    paints.forEach(([n, c]) => row.append(h("button.dm-btn", { type: "button", onclick: () => draw(c) }, n)));
+    draw(paints[0][1]);
+    ctx.stage.append(h("div.dm-card", h("div.dm-h", "Hydra LTE242"), car, row, h("div.dm-muted", "790 hp · 0-100 km/h in 2.6 s · 335 km/h · four lift thrusters")));
+    ctx.foot("The real VOID has a 3D film with music, a free-roam game in real Dammam and a full garage.");
+  };
 })();

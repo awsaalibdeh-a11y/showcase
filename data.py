@@ -23,8 +23,18 @@ PROJECTS = [
                  "Recite out loud and Noor marks every mistake, or hide the text for tasmi' and get a score. Sheikh Aws, an AI helper, answers questions about prayer, fasting and duas, "
                  "and families on Mellow see what everyone read while parents give reading and memorizing tasks. Prayer times, Qibla, Ramadan mode, adhkar and a Quran platform game too.",
         "stack": ["Flask", "JavaScript PWA", "Web Speech", "Service Worker", "Android app", "Canvas game"],
-        "url": "https://noor-quran-xuzt.onrender.com", "repo": "quran", "apk": "https://noor-quran-xuzt.onrender.com/noor.apk",
+        "url": "https://death242-noor.static.hf.space", "repo": "quran", "apk": "https://huggingface.co/datasets/Death242/downloads/resolve/main/noor.apk",
         "steps": ["Open it on your phone and pick a surah, or tap Listen for Maher Al-Muaiqly", "Tap Recite to read aloud and get checked, or ask Sheikh Aws a question", "Link Mellow so your family sees your streak and can give you tasks"],
+    },
+    {
+        "id": "void", "name": "VOID", "emoji": "🏎️", "hue": 355, "kind": "app",
+        "tag": "The Hydra LTE242, a dream car you can watch, drive and fly through real Dammam.",
+        "about": "A black and red hypercar inspired by the McLaren 765LT, modelled entirely in code. Watch a 44-second film synced to an original phonk track: "
+                 "it takes a 360 loop, launches off a ramp, lifts off on four thrusters and glides into the front seat's dashcam. Then play it: free roam in al-Tubaishi, "
+                 "Dammam, rebuilt from real OpenStreetMap data with traffic, people, a Fly button, missions and a garage.",
+        "stack": ["Three.js", "Web Audio", "OpenStreetMap", "JavaScript", "Static site"],
+        "url": "https://death242-void.static.hf.space", "repo": "void",
+        "steps": ["Press Watch for the film, with sound on", "Press Play, drive out of Tubaishi park, then press F to fly", "Press Build to paint your own Hydra LTE242"],
     },
     {
         "id": "scout", "name": "Scout", "emoji": "🧭", "hue": 160, "kind": "ai",
@@ -59,7 +69,7 @@ PROJECTS = [
         "about": "A flight sim with a real flight model: lift, stall, drag and thrust in SI units on a 16 km generated island. "
                  "Four aircraft, hand-written sky, sea and clouds, no installs.",
         "stack": ["Three.js", "Custom shaders", "Flask"],
-        "url": "https://crosswind-w8g9.onrender.com", "repo": "crosswind",
+        "url": "https://death242-crosswind.static.hf.space", "repo": "crosswind",
         "steps": ["Pick one of the four aircraft", "Full throttle, then ease back at about 60 knots", "Fly the island and land on the runway"],
     },
     {
@@ -122,7 +132,7 @@ PROJECTS = [
         "about": "A joke site with a bad UI on purpose: a runaway button, a potato to chat with, a calculator where 2+2 is fish, a download bar for more RAM and a dozen more toys. "
                  "It opens with a photosensitivity warning and has a Calm mode with no flashing or movement.",
         "stack": ["Flask", "Vanilla JS", "Web Audio"],
-        "url": "https://totally-normal-website.onrender.com", "repo": "totally-normal-website",
+        "url": "https://death242-totally-normal-website.static.hf.space", "repo": "totally-normal-website",
         "steps": ["Read the warning and pick Calm mode or the chaos", "Press anything. Most things do something", "Try to catch the button. It gives up eventually"],
     },
     {
@@ -179,6 +189,14 @@ MADE = {
             "We tested on my real laptop and tablet, fixed what broke (grounding, ringing, two tabs), and I shipped it"
         ],
         "ai": ""
+    },
+    "void": {
+        "steps": [
+            "I showed Claude a short video of a car concept website and said: make one like it, but original and cooler",
+            "I picked the look (all black and red, like a McLaren 765LT), named it the Hydra LTE242, and asked for a loop, a ramp, thrusters, wings, a front seat and a dashcam. Claude helped build it in Three.js, with phonk-style music made in code",
+            "I asked for a game too: free roam in al-Tubaishi, Dammam, built from real map data, with traffic, people and a Fly button. Then I tested it and pushed until it felt right"
+        ],
+        "ai": "",
     },
     "noor": {
         "steps": [
@@ -335,7 +353,7 @@ FAQ = [
 
 # A snapshot of every project's real git history, read from the repositories on 2026-10-16:
 # (project id, date of the first commit, date of the last commit, number of commits). Update it when a project moves a lot.
-SNAPSHOT = "2026-10-21"
+SNAPSHOT = "2026-10-24"
 TIMELINE = [
     ("scout", "2026-09-14", "2026-10-16", 25),
     ("unwritten", "2026-09-19", "2026-10-10", 12),
@@ -350,7 +368,8 @@ TIMELINE = [
     ("nonsense", "2026-10-13", "2026-10-13", 2),
     ("womanten", "2026-10-13", "2026-10-13", 8),
     ("whatif", "2026-10-15", "2026-10-15", 1),
-    ("noor", "2026-10-18", "2026-10-21", 11),
+    ("noor", "2026-10-18", "2026-10-24", 14),
+    ("void", "2026-10-23", "2026-10-24", 5),
 ]
 # Colours for the timeline bars and the designed cards: the project's own hue, except the blue ones (the owner dislikes blue) which get a warm one.
 WARM_HUE = {"homebase": 18, "cramly": 340, "crosswind": 32}
